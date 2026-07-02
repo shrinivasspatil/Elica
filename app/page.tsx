@@ -120,20 +120,62 @@ export default function Home() {
       {/* Hero Section */}
       <Hero />
 
-      {/* Trust Banner with Reviews */}
-      <section className="py-8 md:py-12 bg-white border-b border-border">
+      {/* Trust & Credentials Banner */}
+      <section className="py-12 md:py-16 bg-gradient-to-r from-primary/5 to-accent/5 border-b border-border">
         <div className="container mx-auto px-4">
-          <div className="text-center mb-8">
-            <h3 className="text-sm font-semibold text-primary uppercase tracking-wide mb-3">Trusted by Thousands</h3>
-            <p className="text-muted-foreground">Real reviews from satisfied customers across Bangalore</p>
+          <div className="text-center mb-12">
+            <h3 className="text-sm font-semibold text-primary uppercase tracking-wide mb-3">Professional & Registered</h3>
+            <p className="text-lg text-foreground font-semibold mb-2">Independent Private Registered Firm</p>
+            <p className="text-muted-foreground max-w-2xl mx-auto">Certified professionals committed to excellence in appliance repair services</p>
           </div>
-          <div className="flex justify-center">
-            <img 
-              src="/images/trust-reviews.png" 
-              alt="Customer reviews and ratings for Faber repair services"
-              className="max-w-full h-auto rounded-lg shadow-md"
-              loading="lazy"
-            />
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {/* Credential Card 1 */}
+            <div className="bg-white rounded-lg p-6 shadow-sm border border-border text-center">
+              <div className="text-4xl mb-4">📜</div>
+              <h4 className="font-semibold text-foreground mb-2">GST Registered</h4>
+              <p className="text-sm text-muted-foreground">Certified and tax-compliant business</p>
+            </div>
+
+            {/* Credential Card 2 */}
+            <div className="bg-white rounded-lg p-6 shadow-sm border border-border text-center">
+              <div className="text-4xl mb-4">🏆</div>
+              <h4 className="font-semibold text-foreground mb-2">Factory Certified</h4>
+              <p className="text-sm text-muted-foreground">Authorized Faber service technicians</p>
+            </div>
+
+            {/* Credential Card 3 */}
+            <div className="bg-white rounded-lg p-6 shadow-sm border border-border text-center">
+              <div className="text-4xl mb-4">✅</div>
+              <h4 className="font-semibold text-foreground mb-2">Warranty Honored</h4>
+              <p className="text-sm text-muted-foreground">1-year warranty on all repairs</p>
+            </div>
+
+            {/* Credential Card 4 */}
+            <div className="bg-white rounded-lg p-6 shadow-sm border border-border text-center">
+              <div className="text-4xl mb-4">🛡️</div>
+              <h4 className="font-semibold text-foreground mb-2">Fully Insured</h4>
+              <p className="text-sm text-muted-foreground">Professional liability coverage</p>
+            </div>
+          </div>
+
+          <div className="mt-12 grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+            <div>
+              <div className="text-3xl md:text-4xl font-bold text-primary mb-2">10+</div>
+              <p className="text-sm text-muted-foreground">Years Experience</p>
+            </div>
+            <div>
+              <div className="text-3xl md:text-4xl font-bold text-primary mb-2">5000+</div>
+              <p className="text-sm text-muted-foreground">Satisfied Customers</p>
+            </div>
+            <div>
+              <div className="text-3xl md:text-4xl font-bold text-primary mb-2">8</div>
+              <p className="text-sm text-muted-foreground">Bangalore Areas</p>
+            </div>
+            <div>
+              <div className="text-3xl md:text-4xl font-bold text-primary mb-2">24/7</div>
+              <p className="text-sm text-muted-foreground">Available Support</p>
+            </div>
           </div>
         </div>
       </section>
