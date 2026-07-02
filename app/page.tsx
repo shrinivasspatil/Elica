@@ -281,21 +281,34 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8">
-            {[
-              { icon: '⚡', title: 'Quick Response', desc: 'Same-day service available in most areas' },
-              { icon: '👨‍🔧', title: 'Expert Technicians', desc: 'Certified professionals with 10+ years experience' },
-              { icon: '✅', title: 'Quality Guaranteed', desc: 'All repairs backed by 1-year warranty' },
-              { icon: '💰', title: 'Transparent Pricing', desc: 'No hidden charges, fixed rates for all services' },
-              { icon: '📞', title: '24/7 Support', desc: 'Always available when you need us' },
-              { icon: '🎯', title: 'Area-wise Coverage', desc: 'Available across all major Bangalore localities' }
-            ].map((item, idx) => (
-              <div key={idx} className="text-center space-y-3">
-                <div className="text-5xl mb-4">{item.icon}</div>
-                <h3 className="text-xl font-semibold text-foreground">{item.title}</h3>
-                <p className="text-muted-foreground">{item.desc}</p>
-              </div>
-            ))}
+          <div className="grid md:grid-cols-2 gap-12 items-center mb-12">
+            {/* Image */}
+            <div className="rounded-lg overflow-hidden shadow-lg">
+              <img 
+                src="/images/service-excellence.png" 
+                alt="Professional Elicaa appliance repair technician providing expert service"
+                className="w-full h-auto object-cover"
+                loading="lazy"
+              />
+            </div>
+
+            {/* Features Grid */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+              {[
+                { icon: '⚡', title: 'Quick Response', desc: 'Same-day service available in most areas' },
+                { icon: '👨‍🔧', title: 'Expert Technicians', desc: 'Certified professionals with 10+ years experience' },
+                { icon: '✅', title: 'Quality Guaranteed', desc: 'All repairs backed by 1-year warranty' },
+                { icon: '💰', title: 'Transparent Pricing', desc: 'No hidden charges, fixed rates for all services' },
+                { icon: '📞', title: '24/7 Support', desc: 'Always available when you need us' },
+                { icon: '🎯', title: 'Area-wise Coverage', desc: 'Available across all major Bangalore localities' }
+              ].map((item, idx) => (
+                <div key={idx} className="space-y-2">
+                  <div className="text-4xl mb-2">{item.icon}</div>
+                  <h3 className="text-lg font-semibold text-foreground">{item.title}</h3>
+                  <p className="text-sm text-muted-foreground">{item.desc}</p>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </section>
