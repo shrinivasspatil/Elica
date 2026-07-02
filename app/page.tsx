@@ -233,7 +233,7 @@ export default function Home() {
 
           <div className="text-center mt-12">
             <Link href="/services">
-              <Button size="lg" className="bg-primary hover:bg-primary/90">
+              <Button size="lg" className="bg-primary hover:bg-primary/90 text-white font-semibold">
                 View All Services
               </Button>
             </Link>
