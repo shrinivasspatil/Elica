@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { Button } from '@/components/ui/button'
+import { ThankYouModal } from './thank-you-modal'
 import { X } from 'lucide-react'
 
 const ELICAA_SERVICES = [
@@ -17,7 +18,9 @@ const ELICAA_SERVICES = [
 
 export function LeadCaptureModal() {
   const [isOpen, setIsOpen] = useState(false)
+  const [showThankYou, setShowThankYou] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [submittedData, setSubmittedData] = useState<any>(null)
   const [formData, setFormData] = useState({
     name: '',
     phone: '',
@@ -72,9 +75,10 @@ export function LeadCaptureModal() {
 
       if (response.ok) {
         sessionStorage.setItem('elicaa_lead_submitted', 'true')
-        alert('Thank you! We will contact you soon.')
+        setSubmittedData(formData)
         setIsOpen(false)
-        setFormData({ name: '', phone: '', area: '', pincode: '', service: '' })
+        setShowThankYou(true)
+        setFormData({ name: '', phone: '', pincode: '', service: '' })
       }
     } catch (error) {
       console.error('Error submitting form:', error)
@@ -193,6 +197,12 @@ export function LeadCaptureModal() {
           </form>
         </div>
       </div>
+
+      <ThankYouModal
+        isOpen={showThankYou}
+        onClose={() => setShowThankYou(false)}
+        leadData={submittedData}
+      />
     </div>
   )
 }
