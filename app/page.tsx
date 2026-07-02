@@ -120,6 +120,24 @@ export default function Home() {
       {/* Hero Section */}
       <Hero />
 
+      {/* Trust Banner with Reviews */}
+      <section className="py-8 md:py-12 bg-white border-b border-border">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-8">
+            <h3 className="text-sm font-semibold text-primary uppercase tracking-wide mb-3">Trusted by Thousands</h3>
+            <p className="text-muted-foreground">Real reviews from satisfied customers across Bangalore</p>
+          </div>
+          <div className="flex justify-center">
+            <img 
+              src="/images/trust-reviews.png" 
+              alt="Customer reviews and ratings for Faber repair services"
+              className="max-w-full h-auto rounded-lg shadow-md"
+              loading="lazy"
+            />
+          </div>
+        </div>
+      </section>
+
       {/* Featured Services */}
       <section className="py-16 md:py-24 bg-background">
         <div className="container mx-auto px-4">
