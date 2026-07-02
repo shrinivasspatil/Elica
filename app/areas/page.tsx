@@ -6,11 +6,12 @@ import Link from 'next/link'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Service Areas | Faber Repair & Service',
-  description: 'Find Faber repair service in your Bangalore area. We cover Whitefield, Indiranagar, Koramangala, JP Nagar, and more with fast response times.',
+  title: 'Service Areas | Faber Repair & Service - Bangalore',
+  description: 'Faber repair service across 8 major Bangalore areas serving 3M+ residents. Whitefield, Indiranagar, Electronic City, Malleshwaram, JP Nagar, Bellandur, Yeshwanthpur, Bannerghatta Road. Fast response & same-day service.',
+  keywords: 'Faber repair Bangalore, chimney cleaning service, appliance service near me',
   openGraph: {
     title: 'Service Areas | Faber Repair & Service',
-    description: 'Professional Faber repair service across Bangalore localities',
+    description: 'Professional Faber repair across 8 major Bangalore high-population areas',
   },
 }
 
@@ -18,50 +19,50 @@ const serviceAreas = [
   {
     id: '1',
     areaName: 'Whitefield',
-    zones: 'Whitefield, Marathahalli, Sarjapur Road',
-    description: 'Fast service coverage across entire Whitefield IT hub. Average response time: 2-3 hours'
+    zones: 'Whitefield, Marathahalli, Sarjapur Road, ITPL Area',
+    description: 'Fast service across 500K+ residents in Bangalore\'s prime IT hub. 2-3 hour response time'
   },
   {
     id: '2',
     areaName: 'Indiranagar',
-    zones: 'Indiranagar, Koramangala, HSR Layout',
-    description: 'Comprehensive coverage in central Bangalore. Same-day service available'
+    zones: 'Indiranagar, Koramangala, HSR Layout, Domlur',
+    description: 'Comprehensive coverage for 400K+ population in central Bangalore. Same-day service'
   },
   {
     id: '3',
-    areaName: 'JP Nagar',
-    zones: 'JP Nagar, Banashankari, Uttarahalli',
-    description: 'Reliable service in South Bangalore locality. Quick turnaround time'
+    areaName: 'Electronic City',
+    zones: 'Electronic City Phase 1 & 2, Konappana Agrahara, Attibele',
+    description: 'Expert service for 300K+ residents in major tech employment hub. 24/7 available'
   },
   {
     id: '4',
-    areaName: 'Hebbal',
-    zones: 'Hebbal, Yelahanka, Sankey Road',
-    description: 'Quick response in North Bangalore areas. Expert technicians available'
+    areaName: 'Malleshwaram',
+    zones: 'Malleshwaram, Yelahanka, Sankey Road, Sampige Road',
+    description: 'Premium service for 350K+ in North Bangalore\'s established residential area. Same-day booking'
   },
   {
     id: '5',
-    areaName: 'Marathahalli',
-    zones: 'Marathahalli, Varthur, Ramprastha',
-    description: 'Comprehensive coverage in East Bangalore. Emergency service available'
+    areaName: 'JP Nagar',
+    zones: 'JP Nagar, Jayanagar, Banashankari, BG Road',
+    description: 'Trusted by 380K+ residents in South Bangalore prime locality. Emergency service available'
   },
   {
     id: '6',
-    areaName: 'Sarjapur',
-    zones: 'Sarjapur, Bellandur, Iblur',
-    description: 'Dedicated service for Sarjapur and surrounding areas. Same-day booking'
+    areaName: 'Bellandur',
+    zones: 'Bellandur, Sarjapur, Varthur, Avni Tech Park',
+    description: 'Serving 420K+ population in growing tech and residential hub. Fast response guaranteed'
   },
   {
     id: '7',
-    areaName: 'Bannerghatta',
-    zones: 'Bannerghatta Road, Madivala, Kalkere',
-    description: 'Professional service in South-Central Bangalore. 24/7 support'
+    areaName: 'Yeshwanthpur',
+    zones: 'Yeshwanthpur, Hebbal, Rajajinagar, Sampangi Rama Nagar',
+    description: 'Quick response for 360K+ residents in West Bangalore. Expert certified technicians'
   },
   {
     id: '8',
-    areaName: 'Jayanagar',
-    zones: 'Jayanagar, Basavanagudi, Lakshmipuram',
-    description: 'Trusted service provider in West Bangalore. Warranty on all repairs'
+    areaName: 'Bannerghatta Road',
+    zones: 'Bannerghatta Road, Ejipura, Bilekahalli, Toorak',
+    description: 'Complete coverage for 330K+ population in South-central Bangalore. Warranty honored'
   }
 ]
 

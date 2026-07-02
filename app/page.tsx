@@ -65,33 +65,57 @@ const serviceAreas = [
   {
     id: '1',
     areaName: 'Whitefield',
-    zones: 'Whitefield, Marathahalli, Sarjapur',
-    description: 'Fast service coverage across entire Whitefield IT hub'
+    zones: 'Whitefield, Marathahalli, Sarjapur Road, ITPL Area',
+    description: 'Serving 500K+ residents in Bangalore\'s IT corridor with rapid response'
   },
   {
     id: '2',
     areaName: 'Indiranagar',
-    zones: 'Indiranagar, Koramangala, HSR Layout',
-    description: 'Comprehensive coverage in central Bangalore'
+    zones: 'Indiranagar, Koramangala, HSR Layout, Domlur',
+    description: 'Comprehensive coverage for 400K+ population in central Bangalore'
   },
   {
     id: '3',
-    areaName: 'JP Nagar',
-    zones: 'JP Nagar, Banashankari, South Bangalore',
-    description: 'Reliable service in South Bangalore locality'
+    areaName: 'Electronic City',
+    zones: 'Electronic City Phase 1 & 2, Konappana Agrahara',
+    description: 'Expert service for 300K+ residents in major tech hub'
   },
   {
     id: '4',
-    areaName: 'Hebbal',
-    zones: 'Hebbal, Yelahanka, North Bangalore',
-    description: 'Quick response in North Bangalore areas'
+    areaName: 'Malleshwaram',
+    zones: 'Malleshwaram, Yelahanka, Sankey Road, Sampige Road',
+    description: 'Premium service for 350K+ in North Bangalore\'s established residential area'
+  },
+  {
+    id: '5',
+    areaName: 'JP Nagar',
+    zones: 'JP Nagar, Jayanagar, Banashankari, BG Road',
+    description: 'Trusted by 380K+ residents in South Bangalore\'s prime locality'
+  },
+  {
+    id: '6',
+    areaName: 'Bellandur',
+    zones: 'Bellandur, Sarjapur, Varthur, Avni Tech Park',
+    description: 'Serving 420K+ population in growing tech and residential hub'
+  },
+  {
+    id: '7',
+    areaName: 'Yeshwanthpur',
+    zones: 'Yeshwanthpur, Hebbal, Rajajinagar, Sampangi Rama Nagar',
+    description: 'Quick response for 360K+ residents in West Bangalore'
+  },
+  {
+    id: '8',
+    areaName: 'Bannerghatta Road',
+    zones: 'Bannerghatta Road, Ejipura, Bilekahalli, Toorak',
+    description: 'Complete coverage for 330K+ population in South-central Bangalore'
   }
 ]
 
 const faqs = [
   {
     question: 'What areas do you cover in Bangalore?',
-    answer: 'We cover all major areas in Bangalore including Whitefield, Indiranagar, Koramangala, JP Nagar, Hebbal, and more.'
+    answer: 'We serve 8 major high-population areas across Bangalore: Whitefield, Indiranagar, Electronic City, Malleshwaram, JP Nagar, Bellandur, Yeshwanthpur, and Bannerghatta Road. Combined population coverage exceeds 3+ million residents.'
   },
   {
     question: 'How quickly can you respond?',
@@ -161,20 +185,20 @@ export default function Home() {
 
           <div className="mt-12 grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
             <div>
-              <div className="text-3xl md:text-4xl font-bold text-primary mb-2">10+</div>
+              <div className="text-3xl md:text-4xl font-bold text-primary mb-2">15+</div>
               <p className="text-sm text-muted-foreground">Years Experience</p>
             </div>
             <div>
-              <div className="text-3xl md:text-4xl font-bold text-primary mb-2">5000+</div>
-              <p className="text-sm text-muted-foreground">Satisfied Customers</p>
+              <div className="text-3xl md:text-4xl font-bold text-primary mb-2">15K+</div>
+              <p className="text-sm text-muted-foreground">Happy Customers</p>
             </div>
             <div>
-              <div className="text-3xl md:text-4xl font-bold text-primary mb-2">8</div>
-              <p className="text-sm text-muted-foreground">Bangalore Areas</p>
+              <div className="text-3xl md:text-4xl font-bold text-primary mb-2">3M+</div>
+              <p className="text-sm text-muted-foreground">Population Served</p>
             </div>
             <div>
               <div className="text-3xl md:text-4xl font-bold text-primary mb-2">24/7</div>
-              <p className="text-sm text-muted-foreground">Available Support</p>
+              <p className="text-sm text-muted-foreground">Emergency Support</p>
             </div>
           </div>
         </div>
