@@ -6,12 +6,12 @@ import Link from 'next/link'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Service Areas | Faber Repair & Service - Bangalore',
-  description: 'Faber repair service across 8 major Bangalore areas serving 3M+ residents. Whitefield, Indiranagar, Electronic City, Malleshwaram, JP Nagar, Bellandur, Yeshwanthpur, Bannerghatta Road. Fast response & same-day service.',
-  keywords: 'Faber repair Bangalore, chimney cleaning service, appliance service near me',
+  title: 'Service Areas | Elicaa Repair & Service - Bangalore',
+  description: 'Elicaa repair service across 8 major Bangalore areas serving 3M+ residents. Whitefield, Indiranagar, Electronic City, Malleshwaram, JP Nagar, Bellandur, Yeshwanthpur, Bannerghatta Road. Fast response & same-day service.',
+  keywords: 'Elicaa repair Bangalore, chimney cleaning service, appliance service near me',
   openGraph: {
-    title: 'Service Areas | Faber Repair & Service',
-    description: 'Professional Faber repair across 8 major Bangalore high-population areas',
+    title: 'Service Areas | Elicaa Repair & Service',
+    description: 'Professional Elicaa repair across 8 major Bangalore high-population areas',
   },
 }
 
@@ -127,7 +127,7 @@ export default function AreasPage() {
           <div className="max-w-3xl mx-auto space-y-8">
             <div className="text-center space-y-4">
               <h2 className="text-3xl md:text-4xl font-serif font-bold text-foreground">
-                Why Choose Faber Service in Your Area?
+                Why Choose Elicaa Service in Your Area?
               </h2>
             </div>
 

@@ -10,7 +10,7 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
           {/* Company Info */}
           <div>
-            <h3 className="font-serif font-bold text-lg mb-4">Faber Service</h3>
+            <h3 className="font-serif font-bold text-lg mb-4">Elicaa Service</h3>
             <p className="text-sm opacity-90">
               Professional appliance repair and service across Bangalore with expert technicians and trusted service.
             </p>
@@ -96,7 +96,7 @@ export function Footer() {
 
         <div className="border-t border-primary-foreground/20 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center text-sm opacity-75">
-            <p>&copy; 2024 Faber Repair & Service. All rights reserved.</p>
+            <p>&copy; 2024 Elicaa Repair & Service. All rights reserved.</p>
             <div className="flex gap-6 mt-4 md:mt-0">
               <Link href="#" className="hover:opacity-100 transition">
                 Privacy Policy

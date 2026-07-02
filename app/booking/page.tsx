@@ -4,11 +4,11 @@ import { BookingForm } from '@/components/booking-form'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Book Service | Faber Repair & Service',
-  description: 'Book your Faber appliance repair service in Bangalore. Fast booking, transparent pricing, same-day service available.',
+  title: 'Book Service | Elicaa Repair & Service',
+  description: 'Book your Elicaa appliance repair service in Bangalore. Fast booking, transparent pricing, same-day service available.',
   openGraph: {
-    title: 'Book Service | Faber Repair & Service',
-    description: 'Easy online booking for Faber appliance repair in Bangalore',
+    title: 'Book Service | Elicaa Repair & Service',
+    description: 'Easy online booking for Elicaa appliance repair in Bangalore',
   },
 }
 
@@ -25,7 +25,7 @@ export default function BookingPage() {
               Book Your Service
             </h1>
             <p className="text-lg text-muted-foreground max-w-2xl">
-              Fill out the form below to book your Faber appliance repair service. We&apos;ll confirm within 2 hours.
+              Fill out the form below to book your Elicaa appliance repair service. We&apos;ll confirm within 2 hours.
             </p>
           </div>
         </div>

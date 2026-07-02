@@ -50,7 +50,7 @@ const testimonials = [
   },
   {
     name: 'Priya Sharma',
-    text: 'Great experience with Faber repair service. They are punctual, knowledgeable, and transparent with pricing.',
+    text: 'Great experience with Elicaa repair service. They are punctual, knowledgeable, and transparent with pricing.',
     rating: 5,
     areaName: 'Whitefield'
   },
@@ -128,7 +128,7 @@ const faqs = [
   },
   {
     question: 'Are your technicians certified?',
-    answer: 'Yes, all our technicians are factory-trained and certified by Faber.'
+    answer: 'Yes, all our technicians are factory-trained and certified by Elicaa.'
   }
 ]
 
@@ -170,7 +170,7 @@ export default function Home() {
                 <Award className="w-10 h-10 text-primary" />
               </div>
               <h4 className="font-semibold text-foreground mb-2">Factory Certified</h4>
-              <p className="text-sm text-muted-foreground">Authorized Faber service technicians</p>
+              <p className="text-sm text-muted-foreground">Authorized Elicaa service technicians</p>
             </div>
 
             {/* Credential Card 3 */}
@@ -221,7 +221,7 @@ export default function Home() {
               Our Services
             </h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto text-pretty">
-              Complete Faber appliance repair and maintenance solutions for your home
+              Complete Elicaa appliance repair and maintenance solutions for your home
             </p>
           </div>
 
@@ -274,7 +274,7 @@ export default function Home() {
         <div className="container mx-auto px-4">
           <div className="text-center mb-12 space-y-4">
             <h2 className="text-4xl md:text-5xl font-serif font-bold text-foreground text-balance">
-              Why Choose Faber Repair?
+              Why Choose Elicaa Repair?
             </h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto text-pretty">
               Professional service you can trust

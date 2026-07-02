@@ -7,12 +7,12 @@ const loraFont = Lora({ variable: '--font-serif', subsets: ['latin'] })
 const interFont = Inter({ variable: '--font-sans', subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'Faber Repair & Service | Professional Appliance Service in Bangalore',
-  description: 'Expert Faber appliance repair and service in Bangalore. Professional technicians, quick response, area-wise coverage. Book your service online today.',
-  keywords: 'Faber repair, appliance service, Bangalore, chimney repair, kitchen appliances',
+  title: 'Elicaa Repair & Service | Professional Appliance Service in Bangalore',
+  description: 'Expert Elicaa appliance repair and service in Bangalore. Professional technicians, quick response, area-wise coverage. Book your service online today.',
+  keywords: 'Elicaa repair, appliance service, Bangalore, chimney repair, kitchen appliances',
   generator: 'v0.app',
   openGraph: {
-    title: 'Faber Repair & Service | Bangalore',
+    title: 'Elicaa Repair & Service | Bangalore',
     description: 'Professional appliance repair and service across Bangalore areas',
     type: 'website',
   },

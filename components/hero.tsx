@@ -18,7 +18,7 @@ export function Hero() {
           <div className="space-y-8">
             <div className="space-y-4">
               <h1 className="text-5xl md:text-6xl font-serif font-bold leading-tight text-balance">
-                Professional Faber Repair & Service
+                Professional Elicaa Repair & Service
               </h1>
               <p className="text-xl text-white/90 leading-relaxed text-pretty">
                 Expert technicians serving Bangalore with fast, reliable appliance repair and maintenance. Available across all major areas with same-day service options.

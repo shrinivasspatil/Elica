@@ -231,10 +231,10 @@ export async function generateMetadata(
   const area = areasData[params.id]
 
   return {
-    title: `Faber Repair in ${area.areaName} | Professional Service`,
-    description: `Professional Faber appliance repair and service in ${area.areaName}, Bangalore. ${area.description} Response time: ${area.responseTime}`,
+    title: `Elicaa Repair in ${area.areaName} | Professional Service`,
+    description: `Professional Elicaa appliance repair and service in ${area.areaName}, Bangalore. ${area.description} Response time: ${area.responseTime}`,
     openGraph: {
-      title: `Faber Repair in ${area.areaName}`,
+      title: `Elicaa Repair in ${area.areaName}`,
       description: area.description,
     },
   }
@@ -268,7 +268,7 @@ export default async function AreaDetailPage(props: AreaDetailPageProps) {
         <div className="container mx-auto px-4">
           <div className="space-y-4">
             <h1 className="text-4xl md:text-5xl font-serif font-bold text-foreground">
-              Faber Repair in {area.areaName}
+              Elicaa Repair in {area.areaName}
             </h1>
             <p className="text-lg text-muted-foreground max-w-2xl">
               {area.description}

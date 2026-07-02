@@ -1,6 +1,6 @@
 export const siteConfig = {
-  name: 'Faber Repair & Service',
-  description: 'Professional Faber appliance repair and service in Bangalore. Expert technicians, quick response, same-day service available.',
+  name: 'Elicaa Repair & Service',
+  description: 'Professional Elicaa appliance repair and service in Bangalore. Expert technicians, quick response, same-day service available.',
   url: process.env.NEXT_PUBLIC_SITE_URL || 'https://faberrepair.com',
   phone: '+91 98765 43210',
   email: 'support@faberrepair.com',

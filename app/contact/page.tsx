@@ -4,11 +4,11 @@ import { SchemaMarkup } from '@/components/schema-markup'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Contact Us | Faber Repair & Service',
-  description: 'Get in touch with Faber Repair & Service. Call us or visit our office for professional appliance repair in Bangalore.',
+  title: 'Contact Us | Elicaa Repair & Service',
+  description: 'Get in touch with Elicaa Repair & Service. Call us or visit our office for professional appliance repair in Bangalore.',
   openGraph: {
-    title: 'Contact Us | Faber Repair & Service',
-    description: 'Contact information and support for Faber repair service',
+    title: 'Contact Us | Elicaa Repair & Service',
+    description: 'Contact information and support for Elicaa repair service',
   },
 }
 

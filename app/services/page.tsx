@@ -6,10 +6,10 @@ import Link from 'next/link'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'All Services | Faber Repair & Service',
-  description: 'Complete range of Faber appliance repair and maintenance services in Bangalore. Chimney cleaning, range hood installation, hob repair, and more.',
+  title: 'All Services | Elicaa Repair & Service',
+  description: 'Complete range of Elicaa appliance repair and maintenance services in Bangalore. Chimney cleaning, range hood installation, hob repair, and more.',
   openGraph: {
-    title: 'All Services | Faber Repair & Service',
+    title: 'All Services | Elicaa Repair & Service',
     description: 'Professional appliance repair services in Bangalore',
   },
 }
@@ -102,7 +102,7 @@ export default function ServicesPage() {
               All Services
             </h1>
             <p className="text-lg text-muted-foreground max-w-2xl">
-              Comprehensive Faber appliance repair and maintenance solutions across Bangalore
+              Comprehensive Elicaa appliance repair and maintenance solutions across Bangalore
             </p>
           </div>
         </div>
@@ -135,11 +135,11 @@ export default function ServicesPage() {
               {[
                 {
                   title: 'Factory-Trained Technicians',
-                  description: 'All our technicians are certified by Faber with regular training updates.'
+                  description: 'All our technicians are certified by Elicaa with regular training updates.'
                 },
                 {
                   title: 'Genuine Parts Only',
-                  description: 'We use only genuine Faber spare parts for all repairs and replacements.'
+                  description: 'We use only genuine Elicaa spare parts for all repairs and replacements.'
                 },
                 {
                   title: '100% Warranty',

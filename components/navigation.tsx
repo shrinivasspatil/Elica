@@ -17,7 +17,7 @@ export function Navigation() {
               <span className="text-primary-foreground font-bold text-lg">F</span>
             </div>
             <span className="font-serif font-bold text-lg text-primary hidden sm:inline">
-              Faber Service
+              Elicaa Service
             </span>
           </Link>
 

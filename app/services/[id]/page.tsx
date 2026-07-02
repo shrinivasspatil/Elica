@@ -87,7 +87,7 @@ const servicesData: Record<string, {
     faqs: [
       {
         question: 'Do you install all brands of range hoods?',
-        answer: 'Yes, we install all major brands including Faber, Elica, Hindware, and more.'
+        answer: 'Yes, we install all major brands including Elicaa, Elica, Hindware, and more.'
       },
       {
         question: 'What about existing installation removal?',
@@ -112,7 +112,7 @@ const servicesData: Record<string, {
       'Burner cleaning and maintenance',
       'Ignition system repair',
       'Surface cleaning and polishing',
-      'Genuine Faber parts used',
+      'Genuine Elicaa parts used',
       'Full functional testing'
     ],
     process: [
@@ -228,10 +228,10 @@ export async function generateMetadata(
   const service = servicesData[params.id]
 
   return {
-    title: `${service.name} | Faber Repair & Service`,
+    title: `${service.name} | Elicaa Repair & Service`,
     description: service.fullDescription,
     openGraph: {
-      title: `${service.name} | Faber Repair & Service`,
+      title: `${service.name} | Elicaa Repair & Service`,
       description: service.fullDescription,
     },
   }
