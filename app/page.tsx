@@ -7,6 +7,7 @@ import { AreaCard } from '@/components/area-card'
 import { Button } from '@/components/ui/button'
 import { SchemaMarkup } from '@/components/schema-markup'
 import { generateLocalBusinessSchema, generateFAQSchema } from '@/lib/seo'
+import { FileCheck, Award, Shield, Lock } from 'lucide-react'
 import Link from 'next/link'
 
 const featuredServices = [
@@ -156,28 +157,36 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {/* Credential Card 1 */}
             <div className="bg-white rounded-lg p-6 shadow-sm border border-border text-center">
-              <img src="/images/gst-registered.png" alt="GST Registered Badge" className="w-20 h-20 mx-auto mb-4 object-contain" loading="lazy" />
+              <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-primary/10 mb-4">
+                <FileCheck className="w-10 h-10 text-primary" />
+              </div>
               <h4 className="font-semibold text-foreground mb-2">GST Registered</h4>
               <p className="text-sm text-muted-foreground">Certified and tax-compliant business</p>
             </div>
 
             {/* Credential Card 2 */}
             <div className="bg-white rounded-lg p-6 shadow-sm border border-border text-center">
-              <img src="/images/factory-certified.png" alt="Factory Certified Badge" className="w-20 h-20 mx-auto mb-4 object-contain" loading="lazy" />
+              <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-primary/10 mb-4">
+                <Award className="w-10 h-10 text-primary" />
+              </div>
               <h4 className="font-semibold text-foreground mb-2">Factory Certified</h4>
               <p className="text-sm text-muted-foreground">Authorized Faber service technicians</p>
             </div>
 
             {/* Credential Card 3 */}
             <div className="bg-white rounded-lg p-6 shadow-sm border border-border text-center">
-              <img src="/images/warranty-seal.png" alt="Warranty Seal Badge" className="w-20 h-20 mx-auto mb-4 object-contain" loading="lazy" />
+              <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-primary/10 mb-4">
+                <Shield className="w-10 h-10 text-primary" />
+              </div>
               <h4 className="font-semibold text-foreground mb-2">Warranty Honored</h4>
               <p className="text-sm text-muted-foreground">1-year warranty on all repairs</p>
             </div>
 
             {/* Credential Card 4 */}
             <div className="bg-white rounded-lg p-6 shadow-sm border border-border text-center">
-              <img src="/images/fully-insured.png" alt="Fully Insured Badge" className="w-20 h-20 mx-auto mb-4 object-contain" loading="lazy" />
+              <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-primary/10 mb-4">
+                <Lock className="w-10 h-10 text-primary" />
+              </div>
               <h4 className="font-semibold text-foreground mb-2">Fully Insured</h4>
               <p className="text-sm text-muted-foreground">Professional liability coverage</p>
             </div>
