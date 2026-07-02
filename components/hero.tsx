@@ -58,12 +58,15 @@ export function Hero() {
             </div>
           </div>
 
-          {/* Right side - Illustration placeholder */}
-          <div className="relative h-96 md:h-full min-h-80 bg-white/10 rounded-2xl backdrop-blur-sm border border-white/20 flex items-center justify-center">
-            <div className="text-center">
-              <div className="text-6xl mb-4">🔧</div>
-              <p className="text-white/70">Professional Service Excellence</p>
-            </div>
+          {/* Right side - Hero image */}
+          <div className="relative h-96 md:h-full min-h-80 rounded-2xl overflow-hidden shadow-2xl">
+            <img 
+              src="/images/hero-service.png" 
+              alt="Professional Elicaa technician providing expert appliance repair service"
+              className="w-full h-full object-cover"
+              loading="eager"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
           </div>
         </div>
       </div>
