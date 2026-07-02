@@ -1,6 +1,7 @@
 import { Analytics } from '@vercel/analytics/next'
 import type { Metadata, Viewport } from 'next'
 import { Lora, Inter } from 'next/font/google'
+import { LeadCaptureModal } from '@/components/lead-capture-modal'
 import './globals.css'
 
 const loraFont = Lora({ variable: '--font-serif', subsets: ['latin'] })
@@ -54,6 +55,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`bg-background ${loraFont.variable} ${interFont.variable}`}>
       <body className="font-sans antialiased text-foreground">
+        <LeadCaptureModal />
         {children}
         {process.env.NODE_ENV === 'production' && <Analytics />}
       </body>
