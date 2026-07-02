@@ -15,24 +15,12 @@ const ELICAA_SERVICES = [
   { id: 'exhaust-fan', label: 'Exhaust Fan Installation' },
 ]
 
-const BANGALORE_AREAS = [
-  'Whitefield',
-  'Indiranagar',
-  'Electronic City',
-  'Malleshwaram',
-  'JP Nagar',
-  'Bellandur',
-  'Yeshwanthpur',
-  'Bannerghatta Road',
-]
-
 export function LeadCaptureModal() {
   const [isOpen, setIsOpen] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [formData, setFormData] = useState({
     name: '',
     phone: '',
-    area: '',
     pincode: '',
     service: '',
   })
@@ -62,7 +50,7 @@ export function LeadCaptureModal() {
     e.preventDefault()
     
     // Validate form
-    if (!formData.name || !formData.phone || !formData.area || !formData.pincode || !formData.service) {
+    if (!formData.name || !formData.phone || !formData.pincode || !formData.service) {
       alert('Please fill all fields')
       return
     }
@@ -150,26 +138,6 @@ export function LeadCaptureModal() {
                 className="w-full px-3 py-2 border border-border rounded-md bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary"
                 required
               />
-            </div>
-
-            {/* Area Dropdown */}
-            <div>
-              <label htmlFor="area" className="block text-sm font-medium text-foreground mb-1">
-                Service Area
-              </label>
-              <select
-                id="area"
-                name="area"
-                value={formData.area}
-                onChange={handleInputChange}
-                className="w-full px-3 py-2 border border-border rounded-md bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary"
-                required
-              >
-                <option value="">Select your area</option>
-                {BANGALORE_AREAS.map(area => (
-                  <option key={area} value={area}>{area}</option>
-                ))}
-              </select>
             </div>
 
             {/* Pincode Field */}
