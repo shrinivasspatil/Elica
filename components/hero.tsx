@@ -12,15 +12,15 @@ export function Hero() {
         <div className="absolute bottom-20 left-20 w-80 h-80 rounded-full bg-accent blur-3xl" />
       </div>
 
-      <div className="relative container mx-auto px-4 py-20 sm:py-32">
-        <div className="grid md:grid-cols-2 gap-12 items-center">
+      <div className="relative container mx-auto px-4 py-24 sm:py-40">
+        <div className="grid md:grid-cols-2 gap-16 items-center">
           {/* Left content */}
-          <div className="space-y-8">
-            <div className="space-y-4">
-              <h1 className="text-5xl md:text-6xl font-serif font-bold leading-tight text-balance">
+          <div className="space-y-10">
+            <div className="space-y-6">
+              <h1 className="text-6xl md:text-7xl font-serif font-bold leading-tight text-balance tracking-tight">
                 Professional Elicaa Repair & Service
               </h1>
-              <p className="text-xl text-white/90 leading-relaxed text-pretty">
+              <p className="text-xl text-white/85 leading-relaxed text-pretty font-light">
                 Expert technicians serving Bangalore with fast, reliable appliance repair and maintenance. Available across all major areas with same-day service options.
               </p>
             </div>
