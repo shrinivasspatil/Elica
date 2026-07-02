@@ -5,6 +5,8 @@ import { ServiceCard } from '@/components/service-card'
 import { Testimonial } from '@/components/testimonial'
 import { AreaCard } from '@/components/area-card'
 import { Button } from '@/components/ui/button'
+import { SchemaMarkup } from '@/components/schema-markup'
+import { generateLocalBusinessSchema, generateFAQSchema } from '@/lib/seo'
 import Link from 'next/link'
 
 const featuredServices = [
@@ -86,9 +88,33 @@ const serviceAreas = [
   }
 ]
 
+const faqs = [
+  {
+    question: 'What areas do you cover in Bangalore?',
+    answer: 'We cover all major areas in Bangalore including Whitefield, Indiranagar, Koramangala, JP Nagar, Hebbal, and more.'
+  },
+  {
+    question: 'How quickly can you respond?',
+    answer: 'We typically respond within 2-4 hours of booking. Same-day service available in most areas.'
+  },
+  {
+    question: 'Do you provide warranty?',
+    answer: 'Yes, all our repairs come with 1-year warranty on parts and workmanship.'
+  },
+  {
+    question: 'Are your technicians certified?',
+    answer: 'Yes, all our technicians are factory-trained and certified by Faber.'
+  }
+]
+
 export default function Home() {
+  const localBusinessSchema = generateLocalBusinessSchema()
+  const faqSchema = generateFAQSchema(faqs)
+
   return (
     <main className="min-h-screen bg-background">
+      <SchemaMarkup schema={localBusinessSchema} />
+      <SchemaMarkup schema={faqSchema} />
       <Navigation />
       
       {/* Hero Section */}
