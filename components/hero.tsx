@@ -34,8 +34,7 @@ export function Hero() {
               <Link href="/services">
                 <Button 
                   size="lg" 
-                  variant="outline" 
-                  className="border-white/30 hover:bg-white/10 text-white hover:text-white"
+                  className="bg-white/20 hover:bg-white/30 text-white border border-white/50 font-semibold"
                 >
                   View Services
                 </Button>
