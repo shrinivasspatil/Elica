@@ -1,18 +1,21 @@
 import { Analytics } from '@vercel/analytics/next'
 import type { Metadata, Viewport } from 'next'
-import { Geist, Geist_Mono } from 'next/font/google'
+import { Lora, Inter } from 'next/font/google'
 import './globals.css'
 
-const geistSans = Geist({ variable: '--font-geist-sans', subsets: ['latin'] })
-const geistMono = Geist_Mono({
-  variable: '--font-geist-mono',
-  subsets: ['latin'],
-})
+const loraFont = Lora({ variable: '--font-serif', subsets: ['latin'] })
+const interFont = Inter({ variable: '--font-sans', subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'v0 App',
-  description: 'Created with v0',
+  title: 'Faber Repair & Service | Professional Appliance Service in Bangalore',
+  description: 'Expert Faber appliance repair and service in Bangalore. Professional technicians, quick response, area-wise coverage. Book your service online today.',
+  keywords: 'Faber repair, appliance service, Bangalore, chimney repair, kitchen appliances',
   generator: 'v0.app',
+  openGraph: {
+    title: 'Faber Repair & Service | Bangalore',
+    description: 'Professional appliance repair and service across Bangalore areas',
+    type: 'website',
+  },
   icons: {
     icon: [
       {
@@ -34,9 +37,12 @@ export const metadata: Metadata = {
 
 export const viewport: Viewport = {
   colorScheme: 'light dark',
+  width: 'device-width',
+  initialScale: 1,
+  userScalable: true,
   themeColor: [
-    { media: '(prefers-color-scheme: light)', color: 'white' },
-    { media: '(prefers-color-scheme: dark)', color: 'black' },
+    { media: '(prefers-color-scheme: light)', color: '#2E3B52' },
+    { media: '(prefers-color-scheme: dark)', color: '#B8A85F' },
   ],
 }
 
@@ -46,8 +52,8 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`}>
-      <body className="font-sans antialiased">
+    <html lang="en" className={`bg-background ${loraFont.variable} ${interFont.variable}`}>
+      <body className="font-sans antialiased text-foreground">
         {children}
         {process.env.NODE_ENV === 'production' && <Analytics />}
       </body>
