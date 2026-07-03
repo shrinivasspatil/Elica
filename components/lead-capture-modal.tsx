@@ -29,13 +29,13 @@ export function LeadCaptureModal() {
   })
 
   useEffect(() => {
-    // Show modal after 3 seconds on page load
+    // Show modal after 8 seconds on page load (give users time to see content on mobile)
     const timer = setTimeout(() => {
       // Check if user has already submitted in this session
       if (!sessionStorage.getItem('elicaa_lead_submitted')) {
         setIsOpen(true)
       }
-    }, 3000)
+    }, 8000)
 
     return () => clearTimeout(timer)
   }, [])
@@ -91,21 +91,21 @@ export function LeadCaptureModal() {
   return (
     <>
       {isOpen && (
-        <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
-          <div className="bg-white rounded-lg shadow-lg max-w-md w-full relative animate-in fade-in zoom-in-95">
+        <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-3 sm:p-4">
+          <div className="bg-white rounded-lg shadow-lg w-full max-w-md max-h-[90vh] overflow-y-auto relative animate-in fade-in zoom-in-95">
             {/* Close Button */}
             <button
               onClick={handleClose}
-              className="absolute right-4 top-4 text-muted-foreground hover:text-foreground"
+              className="sticky top-0 right-4 float-right text-muted-foreground hover:text-foreground z-10"
             >
               <X className="w-5 h-5" />
             </button>
 
             {/* Modal Content */}
-            <div className="p-6">
+            <div className="p-5 sm:p-6">
               <div className="mb-6">
-                <h2 className="text-2xl font-bold text-foreground font-serif">Get Free Service Quote</h2>
-                <p className="text-muted-foreground text-sm mt-2">Tell us your Elicaa appliance issue and we'll get back within 2 hours</p>
+                <h2 className="text-xl sm:text-2xl font-bold text-foreground font-serif">Get Free Service Quote</h2>
+                <p className="text-muted-foreground text-xs sm:text-sm mt-2">Tell us your Elicaa appliance issue and we'll get back within 2 hours</p>
               </div>
 
               <form onSubmit={handleSubmit} className="space-y-4">
