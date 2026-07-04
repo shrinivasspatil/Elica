@@ -293,7 +293,7 @@ export default function Home() {
             </div>
 
             {/* Features Grid */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <div className="grid grid-cols-2 gap-6">
               {[
                 { icon: '⚡', title: 'Quick Response', desc: 'Same-day service available in most areas' },
                 { icon: '👨‍🔧', title: 'Expert Technicians', desc: 'Certified professionals with 10+ years experience' },
@@ -302,10 +302,10 @@ export default function Home() {
                 { icon: '📞', title: '24/7 Support', desc: 'Always available when you need us' },
                 { icon: '🎯', title: 'Area-wise Coverage', desc: 'Available across all major Bangalore localities' }
               ].map((item, idx) => (
-                <div key={idx} className="space-y-2">
-                  <div className="text-4xl mb-2">{item.icon}</div>
-                  <h3 className="text-lg font-semibold text-foreground">{item.title}</h3>
-                  <p className="text-sm text-muted-foreground">{item.desc}</p>
+                <div key={idx} className="space-y-3 p-4 bg-secondary/50 rounded-lg">
+                  <div className="text-5xl">{item.icon}</div>
+                  <h3 className="text-base font-semibold text-foreground">{item.title}</h3>
+                  <p className="text-xs text-muted-foreground">{item.desc}</p>
                 </div>
               ))}
             </div>
