@@ -281,13 +281,13 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-12 items-center mb-12">
+          <div className="grid md:grid-cols-2 gap-12 items-start mb-12">
             {/* Image */}
-            <div className="rounded-lg overflow-hidden shadow-lg">
+            <div className="rounded-lg overflow-hidden shadow-lg h-fit">
               <img 
                 src="/images/service-excellence.png" 
                 alt="Professional Elicaa appliance repair technician providing expert service"
-                className="w-full h-auto object-cover"
+                className="w-full h-auto object-cover max-h-96"
                 loading="lazy"
               />
             </div>
