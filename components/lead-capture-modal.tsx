@@ -28,17 +28,15 @@ export function LeadCaptureModal() {
     service: '',
   })
 
-  useEffect(() => {
-    // Show modal after 8 seconds on page load (give users time to see content on mobile)
-    const timer = setTimeout(() => {
-      // Check if user has already submitted in this session
-      if (!sessionStorage.getItem('elicaa_lead_submitted')) {
-        setIsOpen(true)
-      }
-    }, 8000)
-
-    return () => clearTimeout(timer)
-  }, [])
+  // Auto-popup disabled - users can click "Book Now" or "Get Quote" buttons to open form
+  // useEffect(() => {
+  //   const timer = setTimeout(() => {
+  //     if (!sessionStorage.getItem('elicaa_lead_submitted')) {
+  //       setIsOpen(true)
+  //     }
+  //   }, 8000)
+  //   return () => clearTimeout(timer)
+  // }, [])
 
   const handleClose = () => {
     setIsOpen(false)

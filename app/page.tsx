@@ -281,19 +281,19 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-12 items-center mb-12">
+          <div className="grid md:grid-cols-[1fr_1.5fr] gap-8 items-center mb-12">
             {/* Image */}
-            <div className="rounded-lg overflow-hidden shadow-lg">
+            <div className="rounded-lg overflow-hidden shadow-lg bg-white">
               <img 
                 src="/images/service-excellence.png" 
                 alt="Professional Elicaa appliance repair technician providing expert service"
-                className="w-full h-auto object-cover"
+                className="w-full h-auto"
                 loading="lazy"
               />
             </div>
 
             {/* Features Grid */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <div className="grid grid-cols-2 gap-6">
               {[
                 { icon: '⚡', title: 'Quick Response', desc: 'Same-day service available in most areas' },
                 { icon: '👨‍🔧', title: 'Expert Technicians', desc: 'Certified professionals with 10+ years experience' },
@@ -302,10 +302,10 @@ export default function Home() {
                 { icon: '📞', title: '24/7 Support', desc: 'Always available when you need us' },
                 { icon: '🎯', title: 'Area-wise Coverage', desc: 'Available across all major Bangalore localities' }
               ].map((item, idx) => (
-                <div key={idx} className="space-y-2">
-                  <div className="text-4xl mb-2">{item.icon}</div>
-                  <h3 className="text-lg font-semibold text-foreground">{item.title}</h3>
-                  <p className="text-sm text-muted-foreground">{item.desc}</p>
+                <div key={idx} className="space-y-3 p-4 bg-secondary/50 rounded-lg">
+                  <div className="text-5xl">{item.icon}</div>
+                  <h3 className="text-base font-semibold text-foreground">{item.title}</h3>
+                  <p className="text-xs text-muted-foreground">{item.desc}</p>
                 </div>
               ))}
             </div>
