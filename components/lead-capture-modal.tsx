@@ -16,8 +16,13 @@ const ELICAA_SERVICES = [
   { id: 'exhaust-fan', label: 'Exhaust Fan Installation' },
 ]
 
-export function LeadCaptureModal() {
-  const [isOpen, setIsOpen] = useState(false)
+interface LeadCaptureModalProps {
+  isOpen?: boolean
+  onOpenChange?: (open: boolean) => void
+}
+
+export function LeadCaptureModal({ isOpen: externalIsOpen, onOpenChange }: LeadCaptureModalProps) {
+  const [internalIsOpen, setInternalIsOpen] = useState(false)
   const [showThankYou, setShowThankYou] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submittedData, setSubmittedData] = useState<any>(null)
@@ -27,6 +32,17 @@ export function LeadCaptureModal() {
     pincode: '',
     service: '',
   })
+
+  // Use external isOpen if provided, otherwise use internal state
+  const isOpen = externalIsOpen !== undefined ? externalIsOpen : internalIsOpen
+  
+  const setIsOpen = (value: boolean) => {
+    if (externalIsOpen !== undefined) {
+      onOpenChange?.(value)
+    } else {
+      setInternalIsOpen(value)
+    }
+  }
 
   // Auto-popup disabled - users can click "Book Now" or "Get Quote" buttons to open form
   // useEffect(() => {
@@ -106,10 +122,10 @@ export function LeadCaptureModal() {
                 <p className="text-muted-foreground text-xs sm:text-sm mt-2">Tell us your Elicaa appliance issue and we'll get back within 2 hours</p>
               </div>
 
-              <form onSubmit={handleSubmit} className="space-y-4">
+              <form onSubmit={handleSubmit} className="space-y-3">
                 {/* Name Field */}
                 <div>
-                  <label htmlFor="name" className="block text-sm font-medium text-foreground mb-1">
+                  <label htmlFor="name" className="block text-xs sm:text-sm font-medium text-foreground mb-2">
                     Your Name
                   </label>
                   <input
@@ -119,14 +135,15 @@ export function LeadCaptureModal() {
                     value={formData.name}
                     onChange={handleInputChange}
                     placeholder="John Doe"
-                    className="w-full px-3 py-2 border border-border rounded-md bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary"
+                    className="w-full px-4 py-3 border border-border rounded-lg bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-base sm:text-sm"
                     required
+                    autoComplete="name"
                   />
                 </div>
 
                 {/* Phone Field */}
                 <div>
-                  <label htmlFor="phone" className="block text-sm font-medium text-foreground mb-1">
+                  <label htmlFor="phone" className="block text-xs sm:text-sm font-medium text-foreground mb-2">
                     Phone Number
                   </label>
                   <input
@@ -137,14 +154,16 @@ export function LeadCaptureModal() {
                     onChange={handleInputChange}
                     placeholder="9876543210"
                     maxLength={10}
-                    className="w-full px-3 py-2 border border-border rounded-md bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary"
+                    className="w-full px-4 py-3 border border-border rounded-lg bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-base sm:text-sm"
                     required
+                    autoComplete="tel"
+                    inputMode="numeric"
                   />
                 </div>
 
                 {/* Pincode Field */}
                 <div>
-                  <label htmlFor="pincode" className="block text-sm font-medium text-foreground mb-1">
+                  <label htmlFor="pincode" className="block text-xs sm:text-sm font-medium text-foreground mb-2">
                     Pincode
                   </label>
                   <input
@@ -155,14 +174,15 @@ export function LeadCaptureModal() {
                     onChange={handleInputChange}
                     placeholder="560001"
                     maxLength={6}
-                    className="w-full px-3 py-2 border border-border rounded-md bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary"
+                    className="w-full px-4 py-3 border border-border rounded-lg bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-base sm:text-sm"
                     required
+                    inputMode="numeric"
                   />
                 </div>
 
                 {/* Service Dropdown */}
                 <div>
-                  <label htmlFor="service" className="block text-sm font-medium text-foreground mb-1">
+                  <label htmlFor="service" className="block text-xs sm:text-sm font-medium text-foreground mb-2">
                     Elicaa Product / Service
                   </label>
                   <select
@@ -170,7 +190,7 @@ export function LeadCaptureModal() {
                     name="service"
                     value={formData.service}
                     onChange={handleInputChange}
-                    className="w-full px-3 py-2 border border-border rounded-md bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary"
+                    className="w-full px-4 py-3 border border-border rounded-lg bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-base sm:text-sm"
                     required
                   >
                     <option value="">Select service needed</option>
@@ -184,12 +204,12 @@ export function LeadCaptureModal() {
                 <Button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full bg-primary hover:bg-primary/90 text-white font-semibold mt-6"
+                  className="w-full bg-primary hover:bg-primary/90 text-white font-semibold mt-6 py-3 text-base h-auto"
                 >
                   {isSubmitting ? 'Submitting...' : 'Get Free Quote'}
                 </Button>
 
-                <p className="text-xs text-muted-foreground text-center mt-4">
+                <p className="text-xs text-muted-foreground text-center mt-3">
                   We respect your privacy. No spam guaranteed.
                 </p>
               </form>

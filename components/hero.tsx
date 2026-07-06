@@ -1,9 +1,13 @@
 'use client'
 
+import { useState } from 'react'
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
+import { LeadCaptureModal } from './lead-capture-modal'
 
 export function Hero() {
+  const [showLeadForm, setShowLeadForm] = useState(false)
+
   return (
     <section className="relative min-h-screen bg-gradient-to-br from-primary via-primary/90 to-primary/80 text-white overflow-hidden">
       {/* Background pattern */}
@@ -26,11 +30,13 @@ export function Hero() {
             </div>
 
             <div className="flex gap-4 flex-wrap">
-              <Link href="/booking">
-                <Button size="lg" className="bg-accent hover:bg-accent/90 text-foreground font-semibold">
-                  Book Service Now
-                </Button>
-              </Link>
+              <Button 
+                onClick={() => setShowLeadForm(true)}
+                size="lg" 
+                className="bg-accent hover:bg-accent/90 text-foreground font-semibold"
+              >
+                Book Service Now
+              </Button>
               <Link href="/services">
                 <Button 
                   size="lg" 
@@ -70,6 +76,11 @@ export function Hero() {
           </div>
         </div>
       </div>
+
+      <LeadCaptureModal 
+        isOpen={showLeadForm}
+        onOpenChange={setShowLeadForm}
+      />
     </section>
   )
 }
