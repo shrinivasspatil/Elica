@@ -44,15 +44,18 @@ export function LeadCaptureModal({ isOpen: externalIsOpen, onOpenChange }: LeadC
     }
   }
 
-  // Auto-popup disabled - users can click "Book Now" or "Get Quote" buttons to open form
-  // useEffect(() => {
-  //   const timer = setTimeout(() => {
-  //     if (!sessionStorage.getItem('elicaa_lead_submitted')) {
-  //       setIsOpen(true)
-  //     }
-  //   }, 8000)
-  //   return () => clearTimeout(timer)
-  // }, [])
+  // Show form on page load after 2 seconds (attractive onload form)
+  useEffect(() => {
+    // Only show if using internal state (not controlled by parent)
+    if (externalIsOpen === undefined) {
+      const timer = setTimeout(() => {
+        if (!sessionStorage.getItem('elicaa_lead_submitted')) {
+          setInternalIsOpen(true)
+        }
+      }, 2000)
+      return () => clearTimeout(timer)
+    }
+  }, [externalIsOpen])
 
   const handleClose = () => {
     setIsOpen(false)
@@ -106,20 +109,28 @@ export function LeadCaptureModal({ isOpen: externalIsOpen, onOpenChange }: LeadC
     <>
       {isOpen && (
         <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-3 sm:p-4">
-          <div className="bg-white rounded-lg shadow-lg w-full max-w-md max-h-[90vh] overflow-y-auto relative animate-in fade-in zoom-in-95">
+          <div className="bg-white rounded-xl shadow-2xl w-full max-w-md max-h-[90vh] overflow-y-auto relative animate-in fade-in zoom-in-95">
             {/* Close Button */}
             <button
               onClick={handleClose}
-              className="sticky top-0 right-4 float-right text-muted-foreground hover:text-foreground z-10"
+              className="sticky top-4 right-4 text-muted-foreground hover:text-foreground z-10 bg-background rounded-full p-1"
             >
               <X className="w-5 h-5" />
             </button>
 
+            {/* Attractive Header */}
+            <div className="bg-gradient-to-r from-blue-900 to-blue-800 text-white p-6 sm:p-8">
+              <h2 className="text-2xl sm:text-3xl font-bold font-serif mb-2">Get Free Service Quote</h2>
+              <p className="text-blue-100 text-sm sm:text-base">Tell us your Elicaa appliance issue and we'll get back within 2 hours</p>
+            </div>
+
             {/* Modal Content */}
             <div className="p-5 sm:p-6">
-              <div className="mb-6">
-                <h2 className="text-xl sm:text-2xl font-bold text-foreground font-serif">Get Free Service Quote</h2>
-                <p className="text-muted-foreground text-xs sm:text-sm mt-2">Tell us your Elicaa appliance issue and we'll get back within 2 hours</p>
+              <div className="mb-4 bg-blue-50 border border-blue-100 rounded-lg p-4">
+                <p className="text-sm text-blue-900 flex items-center gap-2">
+                  <span className="text-lg">✓</span>
+                  <span><strong>No Hidden Charges</strong> - 100% Free Quote</span>
+                </p>
               </div>
 
               <form onSubmit={handleSubmit} className="space-y-3">
