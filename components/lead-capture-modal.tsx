@@ -110,16 +110,16 @@ export function LeadCaptureModal({ isOpen: externalIsOpen, onOpenChange }: LeadC
       {isOpen && (
         <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-3 sm:p-4">
           <div className="bg-white rounded-xl shadow-2xl w-full max-w-md max-h-[90vh] overflow-y-auto relative animate-in fade-in zoom-in-95">
-            {/* Close Button */}
-            <button
-              onClick={handleClose}
-              className="sticky top-4 right-4 text-muted-foreground hover:text-foreground z-10 bg-background rounded-full p-1"
-            >
-              <X className="w-5 h-5" />
-            </button>
-
             {/* Attractive Header */}
-            <div className="bg-gradient-to-r from-blue-900 to-blue-800 text-white p-6 sm:p-8">
+            <div className="bg-gradient-to-r from-blue-900 to-blue-800 text-white p-6 sm:p-8 relative">
+              {/* Close Button */}
+              <button
+                onClick={handleClose}
+                className="absolute top-4 right-4 text-white hover:bg-white/20 rounded-full p-2 transition-colors"
+                aria-label="Close"
+              >
+                <X className="w-6 h-6" />
+              </button>
               <h2 className="text-2xl sm:text-3xl font-bold font-serif mb-2">Get Free Service Quote</h2>
               <p className="text-blue-100 text-sm sm:text-base">Tell us your Elicaa appliance issue and we'll get back within 2 hours</p>
             </div>
