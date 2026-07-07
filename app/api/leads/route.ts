@@ -29,6 +29,7 @@ export async function POST(request: NextRequest) {
     
     await db.insert(bookings).values({
       id: leadId,
+      userId: null, // No user associated with lead capture form
       serviceId: service,
       areaId: 'pincode-' + pincode, // Generate area ID from pincode
       customerName: name,
