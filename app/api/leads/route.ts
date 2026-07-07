@@ -6,10 +6,10 @@ import { nanoid } from 'nanoid'
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
-    const { name, phone, area, pincode, service } = body
+    const { name, phone, pincode, service } = body
 
     // Validate required fields
-    if (!name || !phone || !area || !pincode || !service) {
+    if (!name || !phone || !pincode || !service) {
       return NextResponse.json(
         { error: 'Missing required fields' },
         { status: 400 }
@@ -30,11 +30,11 @@ export async function POST(request: NextRequest) {
     await db.insert(bookings).values({
       id: leadId,
       serviceId: service,
-      areaId: area,
+      areaId: 'pincode-' + pincode, // Generate area ID from pincode
       customerName: name,
       customerPhone: phone,
-      customerEmail: '', // Can be added later
-      address: `${area}, Bangalore - ${pincode}`,
+      customerEmail: `lead-${phone}@elicaa.local`, // Generate email from phone
+      address: `Bangalore - ${pincode}`,
       status: 'pending',
     })
 

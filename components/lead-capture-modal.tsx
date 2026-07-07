@@ -96,6 +96,9 @@ export function LeadCaptureModal({ isOpen: externalIsOpen, onOpenChange }: LeadC
         setIsOpen(false)
         setShowThankYou(true)
         setFormData({ name: '', phone: '', pincode: '', service: '' })
+      } else {
+        const responseData = await response.json()
+        alert('Error: ' + (responseData.error || 'Failed to submit form'))
       }
     } catch (error) {
       console.error('Error submitting form:', error)

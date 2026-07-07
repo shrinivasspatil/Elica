@@ -87,7 +87,6 @@ export const serviceAreas = pgTable('service_areas', {
 
 export const bookings = pgTable('bookings', {
   id: text('id').primaryKey(),
-  userId: text('userId'),
   serviceId: text('serviceId').notNull(),
   areaId: text('areaId').notNull(),
   customerName: text('customerName').notNull(),
