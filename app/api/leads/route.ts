@@ -33,7 +33,7 @@ export async function POST(request: NextRequest) {
       areaId: 'pincode-' + pincode, // Generate area ID from pincode
       customerName: name,
       customerPhone: phone,
-      customerEmail: '', // Can be added later
+      customerEmail: `lead-${phone}@elicaa.local`, // Generate email from phone
       address: `Bangalore - ${pincode}`,
       status: 'pending',
     })
