@@ -93,12 +93,6 @@ export const bookings = pgTable('bookings', {
   customerEmail: text('customerEmail').notNull(),
   customerPhone: text('customerPhone').notNull(),
   address: text('address').notNull(),
-  preferredDate: text('preferredDate'),
-  preferredTime: text('preferredTime'),
-  notes: text('notes'),
-  status: text('status').default('pending'),
-  createdAt: timestamp('createdAt').notNull().defaultNow(),
-  updatedAt: timestamp('updatedAt').notNull().defaultNow(),
 })
 
 export const testimonials = pgTable('testimonials', {
