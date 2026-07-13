@@ -3,9 +3,15 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { Menu, X } from 'lucide-react'
+import { openLeadModal } from '@/lib/lead-modal'
 
 export function Navigation() {
   const [isOpen, setIsOpen] = useState(false)
+
+  const handleBookNow = () => {
+    openLeadModal()
+    setIsOpen(false)
+  }
 
   return (
     <nav className="sticky top-0 z-50 bg-background border-b border-border/50 backdrop-blur-md">
@@ -14,7 +20,7 @@ export function Navigation() {
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2">
             <div className="w-8 h-8 bg-primary rounded-md flex items-center justify-center">
-              <span className="text-primary-foreground font-bold text-lg">F</span>
+              <span className="text-primary-foreground font-bold text-lg">E</span>
             </div>
             <span className="font-serif font-bold text-lg text-primary hidden sm:inline">
               Elicaa Service
@@ -35,12 +41,13 @@ export function Navigation() {
             <Link href="#contact" className="text-foreground hover:text-primary transition">
               Contact
             </Link>
-            <Link
-              href="#book"
+            <button
+              type="button"
+              onClick={handleBookNow}
               className="bg-primary text-primary-foreground px-6 py-2 rounded-md hover:opacity-90 transition"
             >
               Book Now
-            </Link>
+            </button>
           </div>
 
           {/* Mobile Menu Button */}
@@ -67,9 +74,13 @@ export function Navigation() {
             <Link href="#contact" className="block px-4 py-2 text-foreground hover:bg-secondary rounded-md">
               Contact
             </Link>
-            <Link href="#book" className="block px-4 py-2 bg-primary text-primary-foreground rounded-md hover:opacity-90 transition">
+            <button
+              type="button"
+              onClick={handleBookNow}
+              className="w-full text-left px-4 py-2 bg-primary text-primary-foreground rounded-md hover:opacity-90 transition"
+            >
               Book Now
-            </Link>
+            </button>
           </div>
         )}
       </div>

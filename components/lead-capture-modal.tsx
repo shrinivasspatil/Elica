@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import { Button } from '@/components/ui/button'
 import { ThankYouModal } from './thank-you-modal'
+import { OPEN_LEAD_MODAL_EVENT } from '@/lib/lead-modal'
 import { X } from 'lucide-react'
 
 const ELICAA_SERVICES = [
@@ -43,6 +44,19 @@ export function LeadCaptureModal({ isOpen: externalIsOpen, onOpenChange }: LeadC
       setInternalIsOpen(value)
     }
   }
+
+  // Open from header Book Now (and other triggers)
+  useEffect(() => {
+    const handleOpen = () => {
+      if (externalIsOpen !== undefined) {
+        onOpenChange?.(true)
+      } else {
+        setInternalIsOpen(true)
+      }
+    }
+    window.addEventListener(OPEN_LEAD_MODAL_EVENT, handleOpen)
+    return () => window.removeEventListener(OPEN_LEAD_MODAL_EVENT, handleOpen)
+  }, [externalIsOpen, onOpenChange])
 
   // Show form on page load after 2 seconds (attractive onload form)
   useEffect(() => {

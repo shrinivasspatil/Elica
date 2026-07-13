@@ -9,22 +9,22 @@ export function Hero() {
   const [showLeadForm, setShowLeadForm] = useState(false)
 
   return (
-    <section className="relative min-h-screen bg-gradient-to-br from-primary via-primary/90 to-primary/80 text-white overflow-hidden">
+    <section className="relative w-full min-h-[calc(100svh-4rem)] bg-gradient-to-br from-primary via-primary/90 to-primary/80 text-white overflow-hidden">
       {/* Background pattern */}
       <div className="absolute inset-0 opacity-10">
         <div className="absolute top-20 right-20 w-96 h-96 rounded-full bg-accent blur-3xl" />
         <div className="absolute bottom-20 left-20 w-80 h-80 rounded-full bg-accent blur-3xl" />
       </div>
 
-      <div className="relative container mx-auto px-4 py-24 sm:py-40">
-        <div className="grid md:grid-cols-2 gap-16 items-center">
+      <div className="relative mx-auto flex min-h-[calc(100svh-4rem)] w-full max-w-7xl items-center px-4 py-10 sm:px-6 sm:py-12 lg:px-8">
+        <div className="grid w-full md:grid-cols-2 gap-8 lg:gap-12 items-center">
           {/* Left content */}
-          <div className="space-y-10">
-            <div className="space-y-6">
-              <h1 className="text-6xl md:text-7xl font-serif font-bold leading-tight text-balance tracking-tight">
+          <div className="space-y-6">
+            <div className="space-y-4">
+              <h1 className="text-5xl md:text-6xl lg:text-7xl font-serif font-bold leading-tight text-balance tracking-tight">
                 Professional Elicaa Repair & Service
               </h1>
-              <p className="text-xl text-white/85 leading-relaxed text-pretty font-light">
+              <p className="text-lg md:text-xl text-white/85 leading-relaxed text-pretty font-light">
                 Expert technicians serving Bangalore with fast, reliable appliance repair and maintenance. Available across all major areas with same-day service options.
               </p>
             </div>
@@ -48,7 +48,7 @@ export function Hero() {
             </div>
 
             {/* Trust badges */}
-            <div className="flex gap-6 pt-8 text-sm">
+            <div className="flex gap-6 pt-2 text-sm">
               <div>
                 <div className="font-bold text-accent text-lg">10+</div>
                 <div className="text-white/80">Years Experience</div>
@@ -65,7 +65,7 @@ export function Hero() {
           </div>
 
           {/* Right side - Hero image */}
-          <div className="relative h-96 md:h-full min-h-80 rounded-2xl overflow-hidden shadow-2xl">
+          <div className="relative h-72 md:h-[28rem] lg:h-[32rem] rounded-2xl overflow-hidden shadow-2xl">
             <img 
               src="/images/hero-service.png" 
               alt="Professional Elicaa technician providing expert appliance repair service"
