@@ -10,7 +10,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start -p ${PORT:-3000}",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "postinstall": "node scripts/ensure-native-css.js"
   },
   "dependencies": {
     "@base-ui/react": "^1.5.0",
@@ -40,7 +41,14 @@
     "@types/react-dom": "19.2.3",
     "typescript": "5.7.3"
   },
+  "optionalDependencies": {
+    "@tailwindcss/oxide-linux-x64-gnu": "4.3.2",
+    "@tailwindcss/oxide-linux-x64-musl": "4.3.2",
+    "lightningcss-linux-x64-gnu": "1.32.0",
+    "lightningcss-linux-x64-musl": "1.32.0"
+  },
   "overrides": {
-    "hono": "4.12.25"
+    "hono": "4.12.25",
+    "kysely": "0.28.8"
   }
 }
