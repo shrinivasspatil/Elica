@@ -1,375 +1,240 @@
 import { Navigation } from '@/components/navigation'
 import { Footer } from '@/components/footer'
-import { Button } from '@/components/ui/button'
+import { ContactCta } from '@/components/contact-cta'
+import { SchemaMarkup } from '@/components/schema-markup'
+import {
+  DEFAULT_AREA_SERVICE_LINKS,
+  getAllAreas,
+  getAreaById,
+  getAreaFaqs,
+  getAreaLocalNotes,
+  getBranchName,
+  getNearbyAreaLinks,
+} from '@/lib/areas'
+import {
+  absoluteUrl,
+  buildPageMetadata,
+  generateBreadcrumbSchema,
+  generateLocalBusinessSchema,
+  generateServiceSchema,
+} from '@/lib/seo'
 import Link from 'next/link'
+import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
 
 interface AreaDetailPageProps {
   params: Promise<{ id: string }>
 }
 
-const areasData: Record<string, {
-  id: string
-  areaName: string
-  description: string
-  zones: string[]
-  coordinates: { lat: number; lng: number }
-  responseTime: string
-  availableServices: string[]
-  testimonials: { name: string; text: string; rating: number }[]
-  faqs: { question: string; answer: string }[]
-}> = {
-  '1': {
-    id: '1',
-    areaName: 'Whitefield',
-    description: 'Fast service coverage across entire Whitefield IT hub with expert technicians',
-    zones: ['Whitefield', 'Marathahalli', 'Sarjapur Road', 'ISRO Layout', 'Ramprastha'],
-    coordinates: { lat: 12.9698, lng: 77.7499 },
-    responseTime: '2-3 hours',
-    availableServices: [
-      'Chimney Cleaning',
-      'Range Hood Installation',
-      'Hob Repair',
-      'Microwave Service',
-      'Dishwasher Repair',
-      'Emergency Service'
-    ],
-    testimonials: [
-      {
-        name: 'Rajesh M.',
-        text: 'Excellent service in Whitefield. Technician was professional and on-time.',
-        rating: 5
-      },
-      {
-        name: 'Priya Sharma',
-        text: 'Great experience with quick response and quality work.',
-        rating: 5
-      }
-    ],
-    faqs: [
-      {
-        question: 'What areas do you cover in Whitefield?',
-        answer: 'We cover entire Whitefield, Marathahalli, Sarjapur Road, ISRO Layout, and surrounding areas.'
-      },
-      {
-        question: 'How quickly can you respond?',
-        answer: 'Typically within 2-3 hours of booking for Whitefield area.'
-      }
-    ]
-  },
-  '2': {
-    id: '2',
-    areaName: 'Indiranagar',
-    description: 'Comprehensive coverage in central Bangalore with same-day service available',
-    zones: ['Indiranagar', 'Koramangala', 'HSR Layout', 'Frazer Town', 'Shantinagar'],
-    coordinates: { lat: 12.9716, lng: 77.6412 },
-    responseTime: '1.5-2.5 hours',
-    availableServices: [
-      'Chimney Cleaning',
-      'Range Hood Installation',
-      'Hob Repair',
-      'Microwave Service',
-      'Dishwasher Repair',
-      'Oven Repair',
-      'Emergency Service'
-    ],
-    testimonials: [
-      {
-        name: 'Amit Patel',
-        text: 'Outstanding service in Indiranagar. Professional team and transparent pricing.',
-        rating: 5
-      },
-      {
-        name: 'Kavya S.',
-        text: 'Same-day service available. Very satisfied with the work quality.',
-        rating: 5
-      }
-    ],
-    faqs: [
-      {
-        question: 'Do you offer same-day service in Indiranagar?',
-        answer: 'Yes, for urgent repairs we can provide same-day service in Indiranagar and surrounding areas.'
-      },
-      {
-        question: 'What is your average response time?',
-        answer: 'Our average response time in central Bangalore is 1.5-2.5 hours.'
-      }
-    ]
-  },
-  '3': {
-    id: '3',
-    areaName: 'JP Nagar',
-    description: 'Reliable service in South Bangalore locality with quick turnaround time',
-    zones: ['JP Nagar', 'Banashankari', 'Uttarahalli', 'Kalkere', 'Madivala'],
-    coordinates: { lat: 12.9352, lng: 77.5940 },
-    responseTime: '3-4 hours',
-    availableServices: [
-      'Chimney Cleaning',
-      'Range Hood Installation',
-      'Hob Repair',
-      'Microwave Service',
-      'Dishwasher Repair',
-      'Cooktop Maintenance'
-    ],
-    testimonials: [
-      {
-        name: 'Sunita Rao',
-        text: 'Great service in JP Nagar. Technician was courteous and professional.',
-        rating: 5
-      }
-    ],
-    faqs: [
-      {
-        question: 'Do you service JP Nagar?',
-        answer: 'Yes, we provide comprehensive service coverage in JP Nagar and surrounding areas.'
-      },
-      {
-        question: 'How long does typical service take?',
-        answer: 'Most services are completed within 1-2 hours, with response time of 3-4 hours.'
-      }
-    ]
-  },
-  '4': {
-    id: '4',
-    areaName: 'Hebbal',
-    description: 'Quick response in North Bangalore areas with expert technicians',
-    zones: ['Hebbal', 'Yelahanka', 'Sankey Road', 'Yeshwantpur', 'Someshwara'],
-    coordinates: { lat: 13.0051, lng: 77.5754 },
-    responseTime: '2.5-3.5 hours',
-    availableServices: [
-      'Chimney Cleaning',
-      'Range Hood Installation',
-      'Hob Repair',
-      'Microwave Service',
-      'Emergency Service'
-    ],
-    testimonials: [
-      {
-        name: 'Vikram Kumar',
-        text: 'Reliable service in Hebbal. Would recommend to others.',
-        rating: 5
-      }
-    ],
-    faqs: [
-      {
-        question: 'What areas in North Bangalore do you cover?',
-        answer: 'We cover Hebbal, Yelahanka, Sankey Road, Yeshwantpur and surrounding North Bangalore areas.'
-      }
-    ]
-  },
-  '5': {
-    id: '5',
-    areaName: 'Marathahalli',
-    description: 'Comprehensive coverage in East Bangalore with emergency service available',
-    zones: ['Marathahalli', 'Varthur', 'Ramprastha', 'Manya Junction', 'Brookefield'],
-    coordinates: { lat: 12.9698, lng: 77.7130 },
-    responseTime: '2-3 hours',
-    availableServices: [
-      'Chimney Cleaning',
-      'Range Hood Installation',
-      'Hob Repair',
-      'Microwave Service',
-      'Dishwasher Repair'
-    ],
-    testimonials: [],
-    faqs: []
-  },
-  '6': {
-    id: '6',
-    areaName: 'Sarjapur',
-    description: 'Dedicated service for Sarjapur and surrounding areas with same-day booking',
-    zones: ['Sarjapur', 'Bellandur', 'Iblur', 'Kadubeesanahalli'],
-    coordinates: { lat: 12.9352, lng: 77.7499 },
-    responseTime: '3-4 hours',
-    availableServices: [
-      'Chimney Cleaning',
-      'Range Hood Installation',
-      'Hob Repair',
-      'Microwave Service'
-    ],
-    testimonials: [],
-    faqs: []
-  },
-  '7': {
-    id: '7',
-    areaName: 'Bannerghatta',
-    description: 'Professional service in South-Central Bangalore with 24/7 support',
-    zones: ['Bannerghatta Road', 'Madivala', 'Kalkere', 'Chikkanagamangala'],
-    coordinates: { lat: 12.8970, lng: 77.6140 },
-    responseTime: '3-4 hours',
-    availableServices: [
-      'Chimney Cleaning',
-      'Range Hood Installation',
-      'Hob Repair',
-      'Microwave Service'
-    ],
-    testimonials: [],
-    faqs: []
-  },
-  '8': {
-    id: '8',
-    areaName: 'Jayanagar',
-    description: 'Trusted service provider in West Bangalore with warranty on all repairs',
-    zones: ['Jayanagar', 'Basavanagudi', 'Lakshmipuram', 'Gavigunda'],
-    coordinates: { lat: 12.9352, lng: 77.5714 },
-    responseTime: '3-4 hours',
-    availableServices: [
-      'Chimney Cleaning',
-      'Range Hood Installation',
-      'Hob Repair',
-      'Microwave Service'
-    ],
-    testimonials: [],
-    faqs: []
-  }
+export function generateStaticParams() {
+  return getAllAreas().map((area) => ({ id: area.id }))
 }
 
 export async function generateMetadata(
   props: AreaDetailPageProps
 ): Promise<Metadata> {
   const params = await props.params
-  const area = areasData[params.id]
+  const area = getAreaById(params.id)
 
-  return {
-    title: `Elicaa Repair in ${area.areaName} | Professional Service`,
-    description: `Professional Elicaa appliance repair and service in ${area.areaName}, Bangalore. ${area.description} Response time: ${area.responseTime}`,
-    openGraph: {
-      title: `Elicaa Repair in ${area.areaName}`,
-      description: area.description,
-    },
+  if (!area) {
+    return buildPageMetadata({
+      title: 'Branch Not Found',
+      description: 'The requested Elica Service Centre page was not found.',
+      path: `/areas/${params.id}`,
+      noIndex: true,
+    })
   }
+
+  const branch = getBranchName(area.areaName)
+  const landmark = area.landmark || area.areaName
+
+  return buildPageMetadata({
+    title: `${branch} | Bangalore`,
+    description: `${branch} — Elica chimney, hob and microwave repair near ${landmark}, ${area.areaName}. ${area.description}`,
+    path: `/areas/${area.id}`,
+    keywords: [
+      branch,
+      `Elica service centre ${area.areaName}`,
+      `Elica repair ${area.areaName}`,
+      `chimney service ${area.areaName}`,
+      `appliance repair ${area.areaName} Bangalore`,
+    ],
+  })
 }
 
 export default async function AreaDetailPage(props: AreaDetailPageProps) {
   const params = await props.params
-  const area = areasData[params.id]
+  const area = getAreaById(params.id)
 
   if (!area) {
-    return (
-      <main className="min-h-screen bg-background">
-        <Navigation />
-        <div className="container mx-auto px-4 py-24 text-center">
-          <h1 className="text-2xl font-bold text-foreground mb-4">Area Not Found</h1>
-          <Link href="/areas">
-            <Button>Back to Areas</Button>
-          </Link>
-        </div>
-        <Footer />
-      </main>
-    )
+    notFound()
+  }
+
+  const branch = getBranchName(area.areaName)
+  const faqs = getAreaFaqs(area)
+  const localNotes = getAreaLocalNotes(area)
+  const nearbyAreas = getNearbyAreaLinks(area, 6)
+  const issues =
+    area.commonIssues && area.commonIssues.length > 0
+      ? area.commonIssues
+      : ['chimney deep cleaning', 'weak suction', 'gas hob flame service']
+  const landmark = area.landmark || `${area.areaName} Main Road`
+  const housing = area.housingProfile || 'apartments and independent homes'
+  const corridor = area.corridor || 'Bangalore'
+
+  const localBusiness = {
+    ...generateLocalBusinessSchema(),
+    name: branch,
+    url: absoluteUrl(`/areas/${area.id}`),
+    areaServed: area.zoneList.map((zone) => ({ '@type': 'Place', name: zone })),
+    geo: {
+      '@type': 'GeoCoordinates',
+      latitude: area.coordinates.lat,
+      longitude: area.coordinates.lng,
+    },
   }
 
   return (
     <main className="min-h-screen bg-background">
+      <SchemaMarkup
+        schema={[
+          generateBreadcrumbSchema([
+            { name: 'Home', url: '/' },
+            { name: 'Service Centres', url: '/areas' },
+            { name: branch, url: `/areas/${area.id}` },
+          ]),
+          localBusiness,
+          generateServiceSchema({
+            name: `${branch} — Elica Appliance Repair`,
+            description: area.description,
+            areaName: area.areaName,
+            url: absoluteUrl(`/areas/${area.id}`),
+          }),
+        ]}
+      />
       <Navigation />
 
-      {/* Header */}
       <section className="py-12 md:py-16 bg-gradient-to-r from-primary/10 to-accent/10">
         <div className="container mx-auto px-4">
           <div className="space-y-4">
+            <p className="text-sm font-medium text-primary">
+              {corridor} Bangalore · near {landmark}
+            </p>
             <h1 className="text-4xl md:text-5xl font-serif font-bold text-foreground">
-              Elicaa Repair in {area.areaName}
+              {branch}
             </h1>
-            <p className="text-lg text-muted-foreground max-w-2xl">
+            <p className="aeo-answer text-lg text-muted-foreground max-w-3xl">
               {area.description}
             </p>
+            <p className="text-muted-foreground max-w-3xl">
+              We serve {housing} in {area.areaName} with a typical response time of{' '}
+              <strong>{area.responseTime}</strong>.
+            </p>
+            <ContactCta className="pt-2" />
           </div>
         </div>
       </section>
 
-      {/* Area Info */}
-      <section className="py-8 md:py-12 bg-secondary/30">
-        <div className="container mx-auto px-4">
-          <div className="grid md:grid-cols-2 gap-8">
-            <div className="space-y-2">
-              <p className="text-sm text-muted-foreground uppercase tracking-wide">Response Time</p>
-              <p className="text-3xl font-bold text-primary">{area.responseTime}</p>
-            </div>
-            <div className="space-y-2">
-              <p className="text-sm text-muted-foreground uppercase tracking-wide">Coverage</p>
-              <p className="text-lg font-semibold text-foreground">{area.zones.join(', ')}</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Services Available */}
-      <section className="py-16 md:py-24">
-        <div className="container mx-auto px-4">
-          <h2 className="text-3xl md:text-4xl font-serif font-bold text-foreground mb-12">
-            Services Available in {area.areaName}
+      <section className="py-10 border-b border-border">
+        <div className="container mx-auto px-4 max-w-3xl space-y-3">
+          <h2 className="text-2xl font-serif font-bold">
+            Why homeowners in {area.areaName} choose {branch}
           </h2>
-
-          <div className="grid md:grid-cols-2 gap-6">
-            {area.availableServices.map((service, idx) => (
-              <div key={idx} className="flex gap-4 p-4 border border-border rounded-lg hover:border-primary transition-colors">
-                <div className="text-2xl text-accent flex-shrink-0">✓</div>
-                <p className="text-foreground font-medium">{service}</p>
-              </div>
+          <ul className="list-disc pl-5 space-y-2 text-muted-foreground">
+            {localNotes.map((note) => (
+              <li key={note}>{note}</li>
             ))}
+          </ul>
+        </div>
+      </section>
+
+      <section className="py-12 md:py-16">
+        <div className="container mx-auto px-4 grid md:grid-cols-2 gap-10">
+          <div className="space-y-4">
+            <h2 className="text-2xl font-serif font-bold">Zones Covered near {area.areaName}</h2>
+            <p className="text-muted-foreground">{area.zones}</p>
+            <ul className="list-disc pl-5 space-y-1 text-foreground">
+              {area.zoneList.map((zone) => (
+                <li key={zone}>{zone}</li>
+              ))}
+            </ul>
+            <p className="text-sm text-muted-foreground">
+              Local landmark reference: <strong>{landmark}</strong>
+            </p>
+          </div>
+          <div className="space-y-4">
+            <h2 className="text-2xl font-serif font-bold">Services Available</h2>
+            <ul className="list-disc pl-5 space-y-1 text-foreground">
+              {DEFAULT_AREA_SERVICE_LINKS.map((service) => (
+                <li key={service.href}>
+                  <Link href={service.href} className="text-primary hover:underline">
+                    {service.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+            <p className="text-sm text-muted-foreground">
+              Response time in {area.areaName}: <strong>{area.responseTime}</strong>
+            </p>
+            <ContactCta />
           </div>
         </div>
       </section>
 
-      {/* Testimonials */}
-      {area.testimonials.length > 0 && (
-        <section className="py-16 md:py-24 bg-secondary/30">
-          <div className="container mx-auto px-4">
-            <h2 className="text-3xl md:text-4xl font-serif font-bold text-foreground mb-12">
-              What Our Customers Say
-            </h2>
-
-            <div className="grid md:grid-cols-2 gap-6">
-              {area.testimonials.map((testimonial, idx) => (
-                <div key={idx} className="bg-background p-6 rounded-lg border border-border">
-                  <div className="flex gap-1 mb-3">
-                    {Array.from({ length: testimonial.rating }).map((_, i) => (
-                      <span key={i} className="text-accent">⭐</span>
-                    ))}
-                  </div>
-                  <p className="text-muted-foreground mb-4">{testimonial.text}</p>
-                  <p className="font-semibold text-foreground">{testimonial.name}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-      )}
-
-      {/* FAQs */}
-      {area.faqs.length > 0 && (
-        <section className="py-16 md:py-24">
-          <div className="container mx-auto px-4">
-            <h2 className="text-3xl md:text-4xl font-serif font-bold text-foreground mb-12">
-              Frequently Asked Questions
-            </h2>
-
-            <div className="max-w-3xl mx-auto space-y-6">
-              {area.faqs.map((faq, idx) => (
-                <div key={idx} className="space-y-3 border-b border-border pb-6">
-                  <h3 className="text-lg font-semibold text-foreground">{faq.question}</h3>
-                  <p className="text-muted-foreground leading-relaxed">{faq.answer}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-      )}
-
-      {/* CTA */}
-      <section className="py-16 md:py-24 bg-gradient-to-r from-primary to-primary/80 text-white">
-        <div className="container mx-auto px-4 text-center space-y-8">
-          <h2 className="text-3xl md:text-4xl font-serif font-bold">
-            Book Your Service in {area.areaName}
+      <section className="py-12 bg-secondary/20 border-y border-border">
+        <div className="container mx-auto px-4 max-w-3xl space-y-4">
+          <h2 className="text-2xl font-serif font-bold">
+            Common Elica issues we fix in {area.areaName}
           </h2>
-          <p className="text-xl text-white/90 max-w-2xl mx-auto">
-            Quick response time, professional technicians, and quality guaranteed
+          <p className="text-muted-foreground">
+            Based on service requests from {housing} around {landmark}, these are frequent jobs at{' '}
+            {branch}:
           </p>
-          <Link href="/booking">
-            <Button size="lg" className="bg-accent hover:bg-accent/90 text-foreground font-semibold">
-              Book Service Now
-            </Button>
-          </Link>
+          <ul className="list-disc pl-5 space-y-2 text-foreground">
+            {issues.map((issue) => (
+              <li key={issue}>{issue}</li>
+            ))}
+            <li>Elica chimney general cleaning and deep cleaning</li>
+            <li>Built-in microwave and cooking range servicing</li>
+          </ul>
+          {area.localTip && (
+            <p className="rounded-lg border border-border bg-background p-4 text-sm text-muted-foreground">
+              <strong className="text-foreground">Local tip:</strong> {area.localTip}
+            </p>
+          )}
+        </div>
+      </section>
+
+      <section className="py-12 md:py-16 bg-secondary/30">
+        <div className="container mx-auto px-4 max-w-3xl space-y-4">
+          <h2 className="text-2xl font-serif font-bold">FAQs for {branch}</h2>
+          {faqs.map((faq) => (
+            <div key={faq.question} className="rounded-lg border border-border bg-background p-4">
+              <h3 className="font-semibold">{faq.question}</h3>
+              <p className="aeo-answer mt-2 text-sm text-muted-foreground">{faq.answer}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section className="py-12 border-t border-border">
+        <div className="container mx-auto px-4 max-w-3xl space-y-4">
+          <h2 className="text-2xl font-serif font-bold">Nearby Elica Service Centres</h2>
+          <p className="text-muted-foreground">
+            Also covering localities close to {area.areaName}:
+          </p>
+          <ul className="grid sm:grid-cols-2 gap-2">
+            {nearbyAreas.map((nearby) => (
+              <li key={nearby.id}>
+                <Link
+                  href={`/areas/${nearby.id}`}
+                  className="text-primary hover:underline font-medium"
+                >
+                  {getBranchName(nearby.areaName)}
+                </Link>
+              </li>
+            ))}
+          </ul>
         </div>
       </section>
 
