@@ -3,29 +3,16 @@
 import { useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { submitBooking } from '@/app/actions/bookings'
+import { getAreaOptions } from '@/lib/areas'
+import { leadServices } from '@/lib/lead-services'
 import { useRouter } from 'next/navigation'
 
-const services = [
-  { id: '1', name: 'Chimney Cleaning & Maintenance' },
-  { id: '2', name: 'Range Hood Installation' },
-  { id: '3', name: 'Hob Repair & Service' },
-  { id: '4', name: 'Microwave Service' },
-  { id: '5', name: 'Dishwasher Repair' },
-  { id: '6', name: 'Oven Repair & Cleaning' },
-  { id: '7', name: 'Cooktop Maintenance' },
-  { id: '8', name: 'Emergency Service' }
-]
+const services = leadServices.map((service) => ({
+  id: service.id,
+  name: service.label,
+}))
 
-const areas = [
-  { id: '1', name: 'Whitefield' },
-  { id: '2', name: 'Indiranagar' },
-  { id: '3', name: 'JP Nagar' },
-  { id: '4', name: 'Hebbal' },
-  { id: '5', name: 'Koramangala' },
-  { id: '6', name: 'Marathahalli' },
-  { id: '7', name: 'HSR Layout' },
-  { id: '8', name: 'Banashankari' }
-]
+const areas = getAreaOptions()
 
 export function BookingForm() {
   const router = useRouter()
@@ -155,7 +142,7 @@ export function BookingForm() {
         {/* Area Selection */}
         <div className="space-y-2">
           <label htmlFor="area" className="block text-sm font-semibold text-foreground">
-            Select Service Area
+            Select Service Centre
           </label>
           <select
             id="area"
@@ -163,7 +150,7 @@ export function BookingForm() {
             required
             className="w-full px-4 py-2 border border-input rounded-md bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary"
           >
-            <option value="">Choose an area</option>
+            <option value="">Choose a branch</option>
             {areas.map(area => (
               <option key={area.id} value={area.id}>
                 {area.name}

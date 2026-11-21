@@ -4,18 +4,10 @@ import { useState, useEffect } from 'react'
 import { Button } from '@/components/ui/button'
 import { ThankYouModal } from './thank-you-modal'
 import { OPEN_LEAD_MODAL_EVENT } from '@/lib/lead-modal'
+import { captureLeadAttribution, getLeadAttribution } from '@/lib/lead-attribution'
+import { leadServices } from '@/lib/lead-services'
+import { trackEvent } from '@/lib/analytics'
 import { X } from 'lucide-react'
-
-const ELICAA_SERVICES = [
-  { id: 'chimney-cleaning', label: 'Chimney Cleaning & Maintenance' },
-  { id: 'range-hood', label: 'Range Hood Installation & Service' },
-  { id: 'hob-repair', label: 'Hob Repair & Service' },
-  { id: 'microwave', label: 'Microwave Service' },
-  { id: 'dishwasher', label: 'Dishwasher Repair' },
-  { id: 'oven', label: 'Oven Service' },
-  { id: 'cooktop', label: 'Cooktop Repair' },
-  { id: 'exhaust-fan', label: 'Exhaust Fan Installation' },
-]
 
 interface LeadCaptureModalProps {
   isOpen?: boolean
@@ -32,6 +24,7 @@ export function LeadCaptureModal({ isOpen: externalIsOpen, onOpenChange }: LeadC
     phone: '',
     pincode: '',
     service: '',
+    website: '',
   })
 
   // Use external isOpen if provided, otherwise use internal state
@@ -44,6 +37,11 @@ export function LeadCaptureModal({ isOpen: externalIsOpen, onOpenChange }: LeadC
       setInternalIsOpen(value)
     }
   }
+
+  // Persist UTM / gclid from landing URL for the browser session
+  useEffect(() => {
+    captureLeadAttribution()
+  }, [])
 
   // Open from header Book Now (and other triggers)
   useEffect(() => {
@@ -63,7 +61,7 @@ export function LeadCaptureModal({ isOpen: externalIsOpen, onOpenChange }: LeadC
     // Only show if using internal state (not controlled by parent)
     if (externalIsOpen === undefined) {
       const timer = setTimeout(() => {
-        if (!sessionStorage.getItem('elicaa_lead_submitted')) {
+        if (!sessionStorage.getItem('elica_lead_submitted')) {
           setInternalIsOpen(true)
         }
       }, 2000)
@@ -71,7 +69,9 @@ export function LeadCaptureModal({ isOpen: externalIsOpen, onOpenChange }: LeadC
     }
   }, [externalIsOpen])
 
-  const handleClose = () => {
+  const handleClose = (e?: React.MouseEvent) => {
+    e?.preventDefault()
+    e?.stopPropagation()
     setIsOpen(false)
   }
 
@@ -97,19 +97,31 @@ export function LeadCaptureModal({ isOpen: externalIsOpen, onOpenChange }: LeadC
 
     setIsSubmitting(true)
     try {
-      // Submit to server action
+      const attribution = getLeadAttribution()
       const response = await fetch('/api/leads', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({ ...formData, attribution }),
       })
 
       if (response.ok) {
-        sessionStorage.setItem('elicaa_lead_submitted', 'true')
+        const result = await response.json().catch(() => ({}))
+        if (result.emailSent === false) {
+          console.error('[lead] Form saved but email failed:', result.emailError, result.notifyTo)
+        } else {
+          console.log('[lead] Email sent to:', result.emailedTo || result.notifyTo, result.emailFailed || [])
+        }
+        sessionStorage.setItem('elica_lead_submitted', 'true')
+        trackEvent('generate_lead', {
+          service: formData.service,
+          method: 'lead_form',
+          source: attribution.sourceLabel,
+          page_path: attribution.pagePath,
+        })
         setSubmittedData(formData)
         setIsOpen(false)
         setShowThankYou(true)
-        setFormData({ name: '', phone: '', pincode: '', service: '' })
+        setFormData({ name: '', phone: '', pincode: '', service: '', website: '' })
       } else {
         const responseData = await response.json()
         alert('Error: ' + (responseData.error || 'Failed to submit form'))
@@ -125,20 +137,31 @@ export function LeadCaptureModal({ isOpen: externalIsOpen, onOpenChange }: LeadC
   return (
     <>
       {isOpen && (
-        <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-3 sm:p-4">
-          <div className="bg-white rounded-xl shadow-2xl w-full max-w-md max-h-[90vh] overflow-y-auto relative animate-in fade-in zoom-in-95">
+        <div
+          className="fixed inset-0 bg-black/50 z-[100] flex items-center justify-center p-3 sm:p-4"
+          onClick={handleClose}
+          role="dialog"
+          aria-modal="true"
+        >
+          <div
+            className="bg-white rounded-xl shadow-2xl w-full max-w-md max-h-[90vh] overflow-y-auto relative animate-in fade-in zoom-in-95"
+            onClick={(e) => e.stopPropagation()}
+          >
             {/* Attractive Header */}
             <div className="bg-gradient-to-r from-blue-900 to-blue-800 text-white p-6 sm:p-8 relative">
               {/* Close Button */}
               <button
+                type="button"
                 onClick={handleClose}
-                className="absolute top-4 right-4 text-white hover:bg-white/20 rounded-full p-2 transition-colors"
+                className="absolute top-4 right-4 z-10 text-white hover:bg-white/20 rounded-full p-2 transition-colors"
                 aria-label="Close"
               >
                 <X className="w-6 h-6" />
               </button>
               <h2 className="text-2xl sm:text-3xl font-bold font-serif mb-2">Get Free Service Quote</h2>
-              <p className="text-blue-100 text-sm sm:text-base">Tell us your Elicaa appliance issue and we'll get back within 2 hours</p>
+              <p className="text-blue-100 text-sm sm:text-base">
+                Tell us your Elica appliance issue and we&apos;ll get back within 2 hours.
+              </p>
             </div>
 
             {/* Modal Content */}
@@ -146,11 +169,25 @@ export function LeadCaptureModal({ isOpen: externalIsOpen, onOpenChange }: LeadC
               <div className="mb-4 bg-blue-50 border border-blue-100 rounded-lg p-4">
                 <p className="text-sm text-blue-900 flex items-center gap-2">
                   <span className="text-lg">✓</span>
-                  <span><strong>No Hidden Charges</strong> - 100% Free Quote</span>
+                  <span><strong>No Hidden Charges</strong> — 100% Free Quote</span>
                 </p>
               </div>
 
               <form onSubmit={handleSubmit} className="space-y-3">
+                {/* Honeypot — hidden from users */}
+                <div className="absolute -left-[9999px] h-0 w-0 overflow-hidden" aria-hidden="true">
+                  <label htmlFor="website">Website</label>
+                  <input
+                    type="text"
+                    id="website"
+                    name="website"
+                    value={formData.website}
+                    onChange={handleInputChange}
+                    tabIndex={-1}
+                    autoComplete="off"
+                  />
+                </div>
+
                 {/* Name Field */}
                 <div>
                   <label htmlFor="name" className="block text-xs sm:text-sm font-medium text-foreground mb-2">
@@ -180,7 +217,7 @@ export function LeadCaptureModal({ isOpen: externalIsOpen, onOpenChange }: LeadC
                     name="phone"
                     value={formData.phone}
                     onChange={handleInputChange}
-                    placeholder="9876543210"
+                    placeholder="9902552888"
                     maxLength={10}
                     className="w-full px-4 py-3 border border-border rounded-lg bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-base sm:text-sm"
                     required
@@ -211,7 +248,7 @@ export function LeadCaptureModal({ isOpen: externalIsOpen, onOpenChange }: LeadC
                 {/* Service Dropdown */}
                 <div>
                   <label htmlFor="service" className="block text-xs sm:text-sm font-medium text-foreground mb-2">
-                    Elicaa Product / Service
+                    Elica Product / Service
                   </label>
                   <select
                     id="service"
@@ -222,7 +259,7 @@ export function LeadCaptureModal({ isOpen: externalIsOpen, onOpenChange }: LeadC
                     required
                   >
                     <option value="">Select service needed</option>
-                    {ELICAA_SERVICES.map(service => (
+                    {leadServices.map(service => (
                       <option key={service.id} value={service.id}>{service.label}</option>
                     ))}
                   </select>
@@ -238,7 +275,7 @@ export function LeadCaptureModal({ isOpen: externalIsOpen, onOpenChange }: LeadC
                 </Button>
 
                 <p className="text-xs text-muted-foreground text-center mt-3">
-                  We respect your privacy. No spam guaranteed.
+                  We respect your privacy. No spam.
                 </p>
               </form>
             </div>

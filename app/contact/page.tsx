@@ -1,138 +1,108 @@
 import { Navigation } from '@/components/navigation'
 import { Footer } from '@/components/footer'
+import { ContactCta } from '@/components/contact-cta'
 import { SchemaMarkup } from '@/components/schema-markup'
+import {
+  buildPageMetadata,
+  generateBreadcrumbSchema,
+  generateContactPageSchema,
+  generateLocalBusinessSchema,
+  siteConfig,
+} from '@/lib/seo'
 import type { Metadata } from 'next'
 
-export const metadata: Metadata = {
-  title: 'Contact Us | Elicaa Repair & Service',
-  description: 'Get in touch with Elicaa Repair & Service. Call us or visit our office for professional appliance repair in Bangalore.',
-  openGraph: {
-    title: 'Contact Us | Elicaa Repair & Service',
-    description: 'Contact information and support for Elicaa repair service',
-  },
-}
+export const metadata: Metadata = buildPageMetadata({
+  title: 'Contact Us',
+  description:
+    'Contact Elica Repair & Service in Bangalore for chimney, hob, microwave and appliance repair. Call or email for same-day booking support.',
+  path: '/contact',
+})
 
-const contactSchema = {
-  '@context': 'https://schema.org',
-  '@type': 'ContactPoint',
-  telephone: '+91-98765-43210',
-  contactType: 'Customer Service',
-  email: 'support@faberrepair.com',
-  availableLanguage: ['en', 'hi', 'kn']
-}
+const mapSrc = `https://maps.google.com/maps?q=${siteConfig.coordinates.latitude},${siteConfig.coordinates.longitude}&z=11&output=embed`
 
 export default function ContactPage() {
   return (
     <main className="min-h-screen bg-background">
-      <SchemaMarkup schema={contactSchema} />
+      <SchemaMarkup
+        schema={[
+          generateContactPageSchema(),
+          generateLocalBusinessSchema(),
+          generateBreadcrumbSchema([
+            { name: 'Home', url: '/' },
+            { name: 'Contact', url: '/contact' },
+          ]),
+        ]}
+      />
       <Navigation />
 
-      {/* Header */}
       <section className="py-12 md:py-16 bg-gradient-to-r from-primary/10 to-accent/10">
         <div className="container mx-auto px-4">
           <div className="space-y-4">
             <h1 className="text-4xl md:text-5xl font-serif font-bold text-foreground text-balance">
-              Contact Us
+              Contact Elica Repair & Service
             </h1>
-            <p className="text-lg text-muted-foreground max-w-2xl">
-              Get in touch with our support team for any queries or to book a service
+            <p className="aeo-answer text-lg text-muted-foreground max-w-2xl">
+              Reach our Bangalore support team by phone or email for bookings, warranty queries, and same-day
+              appliance repair help. We respond during 7:00 AM – 10:00 PM every day across {siteConfig.areasServed.length} service centres.
             </p>
           </div>
         </div>
       </section>
 
-      {/* Contact Info */}
       <section className="py-16 md:py-24">
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-3 gap-8">
-            {/* Phone */}
             <div className="space-y-4">
               <div className="text-4xl">📞</div>
-              <h3 className="text-lg font-semibold text-foreground">Phone</h3>
-              <a href="tel:+919876543210" className="text-primary hover:underline text-lg">
-                +91 98765 43210
+              <h2 className="text-lg font-semibold text-foreground">Phone</h2>
+              <a href={`tel:${siteConfig.phoneE164}`} className="text-primary hover:underline text-lg">
+                {siteConfig.phoneDisplay}
               </a>
-              <p className="text-sm text-muted-foreground">Mon-Sun: 7:00 AM - 10:00 PM</p>
+              <a
+                href={siteConfig.whatsappUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block text-primary hover:underline"
+              >
+                WhatsApp chat
+              </a>
+              <p className="text-sm text-muted-foreground">Mon–Sun: 7:00 AM – 10:00 PM</p>
             </div>
 
-            {/* Email */}
             <div className="space-y-4">
               <div className="text-4xl">📧</div>
-              <h3 className="text-lg font-semibold text-foreground">Email</h3>
-              <a href="mailto:support@faberrepair.com" className="text-primary hover:underline">
-                support@faberrepair.com
+              <h2 className="text-lg font-semibold text-foreground">Email</h2>
+              <a href={`mailto:${siteConfig.email}`} className="text-primary hover:underline">
+                {siteConfig.email}
               </a>
-              <p className="text-sm text-muted-foreground">Response within 24 hours</p>
+              <p className="text-sm text-muted-foreground">We reply within about 2 hours</p>
             </div>
 
-            {/* Location */}
             <div className="space-y-4">
               <div className="text-4xl">📍</div>
-              <h3 className="text-lg font-semibold text-foreground">Location</h3>
-              <p className="text-foreground">
-                Bangalore<br />
-                Karnataka, India
+              <h2 className="text-lg font-semibold text-foreground">Service Area</h2>
+              <p className="text-foreground">{siteConfig.addressDisplay}</p>
+              <p className="text-sm text-muted-foreground">{siteConfig.napDisplay}</p>
+              <p className="text-sm text-muted-foreground">
+                Doorstep service across {siteConfig.areasServed.length} Bangalore localities
               </p>
-              <p className="text-sm text-muted-foreground">Service available across major areas</p>
             </div>
           </div>
-        </div>
-      </section>
 
-      {/* Service Hours */}
-      <section className="py-16 md:py-24 bg-secondary/30">
-        <div className="container mx-auto px-4">
-          <div className="max-w-2xl mx-auto">
-            <h2 className="text-3xl font-serif font-bold text-foreground mb-8">Service Hours</h2>
-            
-            <div className="space-y-4">
-              {[
-                { day: 'Monday - Saturday', hours: '7:00 AM - 10:00 PM' },
-                { day: 'Sunday', hours: '8:00 AM - 8:00 PM' },
-                { day: 'Holidays', hours: '9:00 AM - 6:00 PM' },
-                { day: 'Emergency', hours: '24/7 Available' }
-              ].map((item, idx) => (
-                <div key={idx} className="flex justify-between border-b border-border pb-3">
-                  <span className="font-semibold text-foreground">{item.day}</span>
-                  <span className="text-muted-foreground">{item.hours}</span>
-                </div>
-              ))}
-            </div>
+          <div className="mt-12 rounded-xl overflow-hidden border border-border">
+            <iframe
+              title="Elica Repair & Service area map — Bangalore"
+              src={mapSrc}
+              className="w-full h-72 md:h-96 border-0"
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              allowFullScreen
+            />
           </div>
-        </div>
-      </section>
 
-      {/* Quick Links */}
-      <section className="py-16 md:py-24">
-        <div className="container mx-auto px-4">
-          <div className="text-center space-y-8">
-            <h2 className="text-3xl font-serif font-bold text-foreground">Quick Actions</h2>
-            
-            <div className="grid md:grid-cols-2 gap-6 max-w-2xl mx-auto">
-              <a href="/booking" className="p-6 border-2 border-primary hover:bg-primary/5 rounded-lg transition-colors">
-                <div className="text-3xl mb-3">📅</div>
-                <h3 className="font-semibold text-foreground mb-2">Book Service</h3>
-                <p className="text-sm text-muted-foreground">Schedule your appointment online</p>
-              </a>
-
-              <a href="/services" className="p-6 border-2 border-primary hover:bg-primary/5 rounded-lg transition-colors">
-                <div className="text-3xl mb-3">🔧</div>
-                <h3 className="font-semibold text-foreground mb-2">View Services</h3>
-                <p className="text-sm text-muted-foreground">See all available repair services</p>
-              </a>
-
-              <a href="/areas" className="p-6 border-2 border-primary hover:bg-primary/5 rounded-lg transition-colors">
-                <div className="text-3xl mb-3">📍</div>
-                <h3 className="font-semibold text-foreground mb-2">Service Areas</h3>
-                <p className="text-sm text-muted-foreground">Check coverage in your area</p>
-              </a>
-
-              <a href="tel:+919876543210" className="p-6 border-2 border-primary hover:bg-primary/5 rounded-lg transition-colors">
-                <div className="text-3xl mb-3">📞</div>
-                <h3 className="font-semibold text-foreground mb-2">Call Now</h3>
-                <p className="text-sm text-muted-foreground">Speak with our support team</p>
-              </a>
-            </div>
+          <div className="mt-12 text-center space-y-4">
+            <p className="text-muted-foreground">Prefer a quick callback?</p>
+            <ContactCta className="justify-center" />
           </div>
         </div>
       </section>

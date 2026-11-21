@@ -1,13 +1,10 @@
 'use client'
 
-import { useState } from 'react'
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
-import { LeadCaptureModal } from './lead-capture-modal'
+import { openLeadModal } from '@/lib/lead-modal'
 
 export function Hero() {
-  const [showLeadForm, setShowLeadForm] = useState(false)
-
   return (
     <section className="relative w-full min-h-[calc(100svh-4rem)] bg-gradient-to-br from-primary via-primary/90 to-primary/80 text-white overflow-hidden">
       {/* Background pattern */}
@@ -22,7 +19,7 @@ export function Hero() {
           <div className="space-y-6">
             <div className="space-y-4">
               <h1 className="text-5xl md:text-6xl lg:text-7xl font-serif font-bold leading-tight text-balance tracking-tight">
-                Professional Elicaa Repair & Service
+                Professional Elica Repair & Service
               </h1>
               <p className="text-lg md:text-xl text-white/85 leading-relaxed text-pretty font-light">
                 Expert technicians serving Bangalore with fast, reliable appliance repair and maintenance. Available across all major areas with same-day service options.
@@ -31,7 +28,7 @@ export function Hero() {
 
             <div className="flex gap-4 flex-wrap">
               <Button 
-                onClick={() => setShowLeadForm(true)}
+                onClick={openLeadModal}
                 size="lg" 
                 className="bg-accent hover:bg-accent/90 text-foreground font-semibold"
               >
@@ -48,39 +45,28 @@ export function Hero() {
             </div>
 
             {/* Trust badges */}
-            <div className="flex gap-6 pt-2 text-sm">
-              <div>
-                <div className="font-bold text-accent text-lg">10+</div>
-                <div className="text-white/80">Years Experience</div>
-              </div>
-              <div>
-                <div className="font-bold text-accent text-lg">5000+</div>
-                <div className="text-white/80">Happy Customers</div>
-              </div>
-              <div>
-                <div className="font-bold text-accent text-lg">24/7</div>
-                <div className="text-white/80">Support Available</div>
-              </div>
-            </div>
+            <p className="pt-2 text-sm text-white/80">
+              Bangalore · chimney, hob and microwave · call from the header. Not an invented customer count.
+            </p>
           </div>
 
           {/* Right side - Hero image */}
           <div className="relative h-72 md:h-[28rem] lg:h-[32rem] rounded-2xl overflow-hidden shadow-2xl">
-            <img 
-              src="/images/hero-service.png" 
-              alt="Professional Elicaa technician providing expert appliance repair service"
-              className="w-full h-full object-cover"
-              loading="eager"
-            />
+            <picture>
+              <source srcSet="/images/hero-service.webp" type="image/webp" />
+              <img
+                src="/images/hero-service.jpg"
+                alt="Professional Elica technician providing expert appliance repair service"
+                className="w-full h-full object-cover"
+                loading="eager"
+                width={1600}
+                height={1200}
+              />
+            </picture>
             <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
           </div>
         </div>
       </div>
-
-      <LeadCaptureModal 
-        isOpen={showLeadForm}
-        onOpenChange={setShowLeadForm}
-      />
     </section>
   )
 }

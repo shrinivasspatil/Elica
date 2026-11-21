@@ -5,41 +5,31 @@ import { ServiceCard } from '@/components/service-card'
 import { Testimonial } from '@/components/testimonial'
 import { AreaCard } from '@/components/area-card'
 import { Button } from '@/components/ui/button'
+import { BookNowButton } from '@/components/book-now-button'
 import { SchemaMarkup } from '@/components/schema-markup'
-import { generateLocalBusinessSchema, generateFAQSchema } from '@/lib/seo'
+import { getAllAreas, getFeaturedAreas } from '@/lib/areas'
+import { getFeaturedServices } from '@/lib/services'
+import {
+  buildPageMetadata,
+  generateHomeGraphSchema,
+  generateSpeakableSchema,
+  siteFaqs,
+} from '@/lib/seo'
+import { CoverageLinks } from '@/components/coverage-links'
+import { HomeNotes } from '@/components/home-notes'
 import { FileCheck, Award, Shield, Lock } from 'lucide-react'
 import Link from 'next/link'
+import type { Metadata } from 'next'
 
-const featuredServices = [
-  {
-    id: '1',
-    name: 'Chimney Cleaning & Maintenance',
-    shortDescription: 'Professional chimney cleaning and filter maintenance to ensure optimal performance and safety.',
-    icon: '🔥',
-    price: 'From ₹1,500'
-  },
-  {
-    id: '2',
-    name: 'Range Hood Installation',
-    shortDescription: 'Expert installation of range hoods and kitchen ventilation systems with warranty.',
-    icon: '⚙️',
-    price: 'From ₹3,000'
-  },
-  {
-    id: '3',
-    name: 'Hob Repair & Service',
-    shortDescription: 'Quick repairs and servicing for gas and electric hobs with genuine parts.',
-    icon: '🍳',
-    price: 'From ₹800'
-  },
-  {
-    id: '4',
-    name: 'Microwave Service',
-    shortDescription: 'Repair and maintenance of microwave ovens with certified technicians.',
-    icon: '🌊',
-    price: 'From ₹1,000'
-  }
-]
+const allAreasCount = getAllAreas().length
+const featuredServices = getFeaturedServices(4)
+
+export const metadata: Metadata = buildPageMetadata({
+  title: 'Elica chimney service in Bangalore | Elica Service Centre',
+  description: `Book Elica chimney, hob, microwave and cooktop service in Bangalore. Independent repair, not the manufacturer.`,
+  path: '/',
+  absoluteTitle: true,
+})
 
 const testimonials = [
   {
@@ -50,7 +40,7 @@ const testimonials = [
   },
   {
     name: 'Priya Sharma',
-    text: 'Great experience with Elicaa repair service. They are punctual, knowledgeable, and transparent with pricing.',
+    text: 'Great experience with Elica repair service. They are punctual, knowledgeable, and clear about the work needed.',
     rating: 5,
     areaName: 'Whitefield'
   },
@@ -62,88 +52,42 @@ const testimonials = [
   }
 ]
 
-const serviceAreas = [
-  {
-    id: '1',
-    areaName: 'Whitefield',
-    zones: 'Whitefield, Marathahalli, Sarjapur Road, ITPL Area',
-    description: 'Serving 500K+ residents in Bangalore\'s IT corridor with rapid response'
-  },
-  {
-    id: '2',
-    areaName: 'Indiranagar',
-    zones: 'Indiranagar, Koramangala, HSR Layout, Domlur',
-    description: 'Comprehensive coverage for 400K+ population in central Bangalore'
-  },
-  {
-    id: '3',
-    areaName: 'Electronic City',
-    zones: 'Electronic City Phase 1 & 2, Konappana Agrahara',
-    description: 'Expert service for 300K+ residents in major tech hub'
-  },
-  {
-    id: '4',
-    areaName: 'Malleshwaram',
-    zones: 'Malleshwaram, Yelahanka, Sankey Road, Sampige Road',
-    description: 'Premium service for 350K+ in North Bangalore\'s established residential area'
-  },
-  {
-    id: '5',
-    areaName: 'JP Nagar',
-    zones: 'JP Nagar, Jayanagar, Banashankari, BG Road',
-    description: 'Trusted by 380K+ residents in South Bangalore\'s prime locality'
-  },
-  {
-    id: '6',
-    areaName: 'Bellandur',
-    zones: 'Bellandur, Sarjapur, Varthur, Avni Tech Park',
-    description: 'Serving 420K+ population in growing tech and residential hub'
-  },
-  {
-    id: '7',
-    areaName: 'Yeshwanthpur',
-    zones: 'Yeshwanthpur, Hebbal, Rajajinagar, Sampangi Rama Nagar',
-    description: 'Quick response for 360K+ residents in West Bangalore'
-  },
-  {
-    id: '8',
-    areaName: 'Bannerghatta Road',
-    zones: 'Bannerghatta Road, Ejipura, Bilekahalli, Toorak',
-    description: 'Complete coverage for 330K+ population in South-central Bangalore'
-  }
-]
+const serviceAreas = getFeaturedAreas(8)
 
-const faqs = [
-  {
-    question: 'What areas do you cover in Bangalore?',
-    answer: 'We serve 8 major high-population areas across Bangalore: Whitefield, Indiranagar, Electronic City, Malleshwaram, JP Nagar, Bellandur, Yeshwanthpur, and Bannerghatta Road. Combined population coverage exceeds 3+ million residents.'
-  },
-  {
-    question: 'How quickly can you respond?',
-    answer: 'We typically respond within 2-4 hours of booking. Same-day service available in most areas.'
-  },
-  {
-    question: 'Do you provide warranty?',
-    answer: 'Yes, all our repairs come with 1-year warranty on parts and workmanship.'
-  },
-  {
-    question: 'Are your technicians certified?',
-    answer: 'Yes, all our technicians are factory-trained and certified by Elicaa.'
-  }
-]
+const faqs = siteFaqs.map((faq) =>
+  faq.question.includes('What areas does Elica')
+    ? {
+        ...faq,
+        answer: `We cover ${allAreasCount} popular Bangalore localities including Whitefield, Indiranagar, Electronic City, Koramangala, HSR Layout, JP Nagar, Bellandur, Yelahanka, RR Nagar and many more, with same-day options in most areas.`,
+      }
+    : faq
+)
 
 export default function Home() {
-  const localBusinessSchema = generateLocalBusinessSchema()
-  const faqSchema = generateFAQSchema(faqs)
-
   return (
     <main className="min-h-screen bg-background">
-      <SchemaMarkup schema={localBusinessSchema} />
-      <SchemaMarkup schema={faqSchema} />
+      <SchemaMarkup
+        schema={[
+          generateHomeGraphSchema(testimonials),
+          generateSpeakableSchema(['.aeo-answer', 'h1', '#faq']),
+        ]}
+      />
       <Navigation />
       
       {/* Hero Section */}
       <Hero />
+      <HomeNotes />
+
+      {/* AEO direct answer */}
+      <section className="py-8 border-b border-border bg-secondary/20">
+        <div className="container mx-auto px-4 max-w-4xl">
+          <p className="aeo-answer text-base md:text-lg text-foreground leading-relaxed">
+            <strong>Elica Repair & Service</strong> provides certified kitchen appliance
+            repair in Bangalore with typical response in 2–4 hours, same-day service in major
+            areas, and warranty-backed workmanship.
+          </p>
+        </div>
+      </section>
 
       {/* Trust & Credentials Banner */}
       <section className="py-12 md:py-16 bg-gradient-to-r from-primary/5 to-accent/5 border-b border-border">
@@ -170,7 +114,7 @@ export default function Home() {
                 <Award className="w-10 h-10 text-primary" />
               </div>
               <h4 className="font-semibold text-foreground mb-2">Factory Certified</h4>
-              <p className="text-sm text-muted-foreground">Authorized Elicaa service technicians</p>
+              <p className="text-sm text-muted-foreground">Authorized Elica service technicians</p>
             </div>
 
             {/* Credential Card 3 */}
@@ -221,13 +165,19 @@ export default function Home() {
               Our Services
             </h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto text-pretty">
-              Complete Elicaa appliance repair and maintenance solutions for your home
+              Complete Elica appliance repair and maintenance solutions for your home
             </p>
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             {featuredServices.map((service) => (
-              <ServiceCard key={service.id} {...service} />
+              <ServiceCard
+                key={service.id}
+                id={service.id}
+                name={service.name}
+                shortDescription={service.shortDescription}
+                icon={service.icon}
+              />
             ))}
           </div>
 
@@ -246,10 +196,10 @@ export default function Home() {
         <div className="container mx-auto px-4">
           <div className="text-center mb-12 space-y-4">
             <h2 className="text-4xl md:text-5xl font-serif font-bold text-foreground text-balance">
-              Service Areas in Bangalore
+              Service Centres in Bangalore
             </h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto text-pretty">
-              Rapid response across major Bangalore localities with same-day service options
+              Rapid response across {allAreasCount} Bangalore localities with same-day service options
             </p>
           </div>
 
@@ -262,9 +212,13 @@ export default function Home() {
           <div className="text-center mt-12">
             <Link href="/areas">
               <Button size="lg" variant="outline" className="border-primary text-primary hover:bg-primary/10">
-                View All Areas
+                View All {allAreasCount} Branches
               </Button>
             </Link>
+          </div>
+
+          <div className="mt-12 max-w-5xl mx-auto">
+            <CoverageLinks title="More Bangalore localities we cover" />
           </div>
         </div>
       </section>
@@ -274,7 +228,7 @@ export default function Home() {
         <div className="container mx-auto px-4">
           <div className="text-center mb-12 space-y-4">
             <h2 className="text-4xl md:text-5xl font-serif font-bold text-foreground text-balance">
-              Why Choose Elicaa Repair?
+              Why Choose Elica Repair?
             </h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto text-pretty">
               Professional service you can trust
@@ -284,12 +238,17 @@ export default function Home() {
           <div className="grid md:grid-cols-[1fr_1.5fr] gap-8 items-center mb-12">
             {/* Image */}
             <div className="rounded-lg overflow-hidden shadow-lg bg-white">
-              <img 
-                src="/images/service-excellence.png" 
-                alt="Professional Elicaa appliance repair technician providing expert service"
-                className="w-full h-auto"
-                loading="lazy"
-              />
+              <picture>
+                <source srcSet="/images/service-excellence.webp" type="image/webp" />
+                <img
+                  src="/images/service-excellence.jpg"
+                  alt="Professional Elica appliance repair technician providing expert service"
+                  className="w-full h-auto"
+                  loading="lazy"
+                  width={1200}
+                  height={900}
+                />
+              </picture>
             </div>
 
             {/* Features Grid */}
@@ -298,7 +257,7 @@ export default function Home() {
                 { icon: '⚡', title: 'Quick Response', desc: 'Same-day service available in most areas' },
                 { icon: '👨‍🔧', title: 'Expert Technicians', desc: 'Certified professionals with 10+ years experience' },
                 { icon: '✅', title: 'Quality Guaranteed', desc: 'All repairs backed by 1-year warranty' },
-                { icon: '💰', title: 'Transparent Pricing', desc: 'No hidden charges, fixed rates for all services' },
+                { icon: '📋', title: 'Free Service Quote', desc: 'Share your issue and get a clear next step' },
                 { icon: '📞', title: '24/7 Support', desc: 'Always available when you need us' },
                 { icon: '🎯', title: 'Area-wise Coverage', desc: 'Available across all major Bangalore localities' }
               ].map((item, idx) => (
@@ -333,6 +292,55 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Guides */}
+      <section className="py-16 md:py-24 bg-background border-t border-border">
+        <div className="container mx-auto px-4 text-center space-y-6">
+          <h2 className="text-4xl md:text-5xl font-serif font-bold text-foreground text-balance">
+            Repair &amp; Maintenance Guides
+          </h2>
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto text-pretty">
+            Practical tips on chimney cleaning, hob care, and microwave servicing for Bangalore kitchens.
+          </p>
+          <Link href="/guides">
+            <Button size="lg" variant="outline" className="border-primary text-primary hover:bg-primary/10">
+              Browse Guides
+            </Button>
+          </Link>
+        </div>
+      </section>
+
+      {/* FAQ — AEO */}
+      <section id="faq" className="py-16 md:py-24 bg-background">
+        <div className="container mx-auto px-4 max-w-3xl">
+          <div className="text-center mb-10 space-y-3">
+            <h2 className="text-3xl md:text-4xl font-serif font-bold text-foreground">
+              Frequently Asked Questions
+            </h2>
+            <p className="text-muted-foreground">
+              Clear answers about Elica repair coverage, timing, warranty, and booking in Bangalore.
+            </p>
+          </div>
+          <div className="space-y-4">
+            {faqs.map((faq) => (
+              <details
+                key={faq.question}
+                className="group rounded-lg border border-border bg-secondary/20 p-4 open:bg-secondary/40"
+              >
+                <summary className="cursor-pointer list-none font-semibold text-foreground pr-6 relative">
+                  {faq.question}
+                  <span className="absolute right-0 top-0 text-muted-foreground group-open:rotate-45 transition">
+                    +
+                  </span>
+                </summary>
+                <p className="aeo-answer mt-3 text-sm md:text-base text-muted-foreground leading-relaxed">
+                  {faq.answer}
+                </p>
+              </details>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* CTA Section */}
       <section className="py-16 md:py-24 bg-gradient-to-r from-primary to-primary/80 text-white">
         <div className="container mx-auto px-4 text-center space-y-8">
@@ -341,15 +349,15 @@ export default function Home() {
               Ready to Book Your Service?
             </h2>
             <p className="text-xl text-white/90 max-w-2xl mx-auto">
-              Get instant booking with our online service scheduler. Choose your area and preferred time slot.
+              Share your details in the quick form — we confirm within about 2 hours.
             </p>
           </div>
 
-          <Link href="/booking">
-            <Button size="lg" className="bg-accent hover:bg-accent/90 text-foreground font-semibold">
-              Book Now - Fast & Easy
-            </Button>
-          </Link>
+          <BookNowButton
+            size="lg"
+            label="Get Free Quote"
+            className="bg-accent hover:bg-accent/90 text-foreground font-semibold"
+          />
         </div>
       </section>
 

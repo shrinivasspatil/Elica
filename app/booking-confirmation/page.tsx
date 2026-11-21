@@ -1,7 +1,16 @@
 import { Navigation } from '@/components/navigation'
 import { Footer } from '@/components/footer'
 import { Button } from '@/components/ui/button'
+import { buildPageMetadata, siteConfig } from '@/lib/seo'
 import Link from 'next/link'
+import type { Metadata } from 'next'
+
+export const metadata: Metadata = buildPageMetadata({
+  title: 'Booking Confirmed',
+  description: 'Your Elica service booking has been received. Our Bangalore team will contact you shortly.',
+  path: '/booking-confirmation',
+  noIndex: true,
+})
 
 export default function BookingConfirmationPage() {
   return (
@@ -11,7 +20,6 @@ export default function BookingConfirmationPage() {
       <section className="py-24">
         <div className="container mx-auto px-4">
           <div className="max-w-2xl mx-auto text-center space-y-8">
-            {/* Success Icon */}
             <div className="space-y-4">
               <div className="text-7xl">✓</div>
               <h1 className="text-4xl md:text-5xl font-serif font-bold text-foreground">
@@ -19,7 +27,6 @@ export default function BookingConfirmationPage() {
               </h1>
             </div>
 
-            {/* Message */}
             <div className="space-y-4 text-lg text-muted-foreground">
               <p>
                 Thank you for booking with us. We have received your service request.
@@ -29,7 +36,6 @@ export default function BookingConfirmationPage() {
               </p>
             </div>
 
-            {/* Info Box */}
             <div className="bg-secondary/50 border border-border rounded-lg p-8 space-y-4">
               <h2 className="text-lg font-semibold text-foreground">What&apos;s Next?</h2>
               <ul className="text-left space-y-3 text-muted-foreground">
@@ -48,7 +54,6 @@ export default function BookingConfirmationPage() {
               </ul>
             </div>
 
-            {/* CTA Buttons */}
             <div className="flex gap-4 justify-center flex-wrap">
               <Link href="/">
                 <Button variant="outline" size="lg">
@@ -62,19 +67,18 @@ export default function BookingConfirmationPage() {
               </Link>
             </div>
 
-            {/* Contact Info */}
             <div className="pt-8 border-t border-border space-y-4">
               <p className="text-sm text-muted-foreground">
                 Have questions? Contact us:
               </p>
               <div className="flex gap-6 justify-center flex-wrap">
-                <a href="tel:+919876543210" className="flex items-center gap-2 text-primary hover:underline">
+                <a href={`tel:${siteConfig.phoneE164}`} className="flex items-center gap-2 text-primary hover:underline">
                   <span>📞</span>
-                  <span>+91 98765 43210</span>
+                  <span>{siteConfig.phoneDisplay}</span>
                 </a>
-                <a href="mailto:support@faberrepair.com" className="flex items-center gap-2 text-primary hover:underline">
+                <a href={`mailto:${siteConfig.email}`} className="flex items-center gap-2 text-primary hover:underline">
                   <span>📧</span>
-                  <span>support@faberrepair.com</span>
+                  <span>{siteConfig.email}</span>
                 </a>
               </div>
             </div>

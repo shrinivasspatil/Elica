@@ -1,4 +1,4 @@
-export const OPEN_LEAD_MODAL_EVENT = 'elicaa:open-lead-modal'
+export const OPEN_LEAD_MODAL_EVENT = 'elica:open-lead-modal'
 
 export function openLeadModal() {
   if (typeof window !== 'undefined') {

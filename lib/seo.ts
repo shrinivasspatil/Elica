@@ -35,16 +35,19 @@ export const siteConfig = {
   // Google Business Profile, Google Maps, Facebook, Instagram, Justdial, etc.
   social: [] as string[],
   get areasServed() {
-    return getAllAreas().map((area) => `Elica Service Centre ${area.areaName}`)
+    return getAllAreas().map((area) => area.areaName)
   },
   defaultOgImage: '/images/hero-service.jpg',
 }
+
+/** Honest sitemap lastmod — only bump when public content actually changes. */
+export const CONTENT_UPDATED_AT = new Date('2026-11-18T12:00:00.000Z')
 
 export const siteFaqs = [
   {
     question: 'What areas does Elica Repair & Service cover in Bangalore?',
     answer:
-      'We serve through Elica Service Centre branches across 158 popular Bangalore localities including Whitefield, Indiranagar, Electronic City, Koramangala, HSR Layout, Bommanahalli, JP Nagar, Bellandur, Yelahanka, RR Nagar, Banashankari and many more, with same-day options in most areas.',
+      'We serve 158 popular Bangalore localities including Whitefield, Indiranagar, Electronic City, Koramangala, HSR Layout, Bommanahalli, JP Nagar, Bellandur, Yelahanka, RR Nagar, Banashankari and many more, with same-day options in most areas.',
   },
   {
     question: 'How quickly can Elica technicians respond after booking?',
@@ -90,6 +93,18 @@ type PageMetaInput = {
   absoluteTitle?: boolean
 }
 
+const TITLE_LIMIT = 60
+const DESCRIPTION_LIMIT = 155
+const TITLE_TEMPLATE_SUFFIX = ' | Elica'
+
+function clipMeta(value: string, max: number): string {
+  const trimmed = value.replace(/\s+/g, ' ').trim()
+  if (trimmed.length <= max) return trimmed
+  const cut = trimmed.slice(0, Math.max(1, max - 1))
+  const space = cut.lastIndexOf(' ')
+  return `${(space > Math.floor(max / 2) ? cut.slice(0, space) : cut).trim()}…`
+}
+
 export function buildPageMetadata({
   title,
   description,
@@ -101,16 +116,19 @@ export function buildPageMetadata({
 }: PageMetaInput): Metadata {
   const canonical = absoluteUrl(path)
   const ogImage = image.startsWith('http') ? image : absoluteUrl(image)
+  const titleBudget = absoluteTitle ? TITLE_LIMIT : TITLE_LIMIT - TITLE_TEMPLATE_SUFFIX.length
+  const safeTitle = clipMeta(title, titleBudget)
+  const safeDescription = clipMeta(description, DESCRIPTION_LIMIT)
 
   return {
-    title: absoluteTitle ? { absolute: title } : title,
-    description,
+    title: absoluteTitle ? { absolute: safeTitle } : safeTitle,
+    description: safeDescription,
     alternates: {
       canonical,
     },
     openGraph: {
-      title,
-      description,
+      title: safeTitle,
+      description: safeDescription,
       url: canonical,
       siteName: siteConfig.name,
       locale: 'en_IN',
@@ -126,8 +144,8 @@ export function buildPageMetadata({
     },
     twitter: {
       card: 'summary_large_image',
-      title,
-      description,
+      title: safeTitle,
+      description: safeDescription,
       images: [ogImage],
     },
     robots: noIndex
@@ -155,6 +173,10 @@ function organizationBase() {
     url: siteConfig.url,
     email: siteConfig.email,
     telephone: siteConfig.phone,
+    address: {
+      '@type': 'PostalAddress',
+      ...siteConfig.address,
+    },
     logo: {
       '@type': 'ImageObject',
       url: absoluteUrl('/icon.svg'),
@@ -192,9 +214,16 @@ type ReviewInput = {
   areaName?: string
 }
 
-/** Visible on-page testimonials only — no AggregateRating / invented review counts. */
+/**
+ * Visible on-page testimonials only.
+ * Google requires aggregateRating when more than one Review is nested on LocalBusiness.
+ * ratingValue / reviewCount are computed from those same reviews — not invented totals.
+ */
 function buildReviewData(reviews: ReviewInput[]) {
   if (reviews.length === 0) return {}
+
+  const ratingSum = reviews.reduce((sum, review) => sum + review.rating, 0)
+  const ratingValue = Number((ratingSum / reviews.length).toFixed(1))
 
   return {
     review: reviews.map((review) => ({
@@ -206,9 +235,9 @@ function buildReviewData(reviews: ReviewInput[]) {
       reviewBody: review.text,
       reviewRating: {
         '@type': 'Rating',
-        ratingValue: String(review.rating),
-        bestRating: '5',
-        worstRating: '1',
+        ratingValue: review.rating,
+        bestRating: 5,
+        worstRating: 1,
       },
       ...(review.areaName
         ? {
@@ -219,6 +248,18 @@ function buildReviewData(reviews: ReviewInput[]) {
           }
         : {}),
     })),
+    ...(reviews.length > 1
+      ? {
+          aggregateRating: {
+            '@type': 'AggregateRating',
+            ratingValue,
+            bestRating: 5,
+            worstRating: 1,
+            reviewCount: reviews.length,
+            ratingCount: reviews.length,
+          },
+        }
+      : {}),
   }
 }
 
@@ -490,7 +531,6 @@ export function generateSpeakableSchema(cssSelectors: string[]) {
 }
 
 export function generateHomeGraphSchema(reviews: ReviewInput[] = []) {
-  const website = generateWebSiteSchema()
   const localBusiness = generateLocalBusinessSchema(reviews)
   const breadcrumbs = generateBreadcrumbSchema([{ name: 'Home', url: '/' }])
 
@@ -499,15 +539,11 @@ export function generateHomeGraphSchema(reviews: ReviewInput[] = []) {
     return rest
   }
 
+  // Organization + WebSite already come from the root layout. Do not duplicate them here.
   // FAQ content is visible on the homepage; FAQPage JSON-LD omitted (rich results deprecated May 2026)
 
   return {
     '@context': 'https://schema.org',
-    '@graph': [
-      organizationBase(),
-      stripContext(website),
-      stripContext(localBusiness),
-      stripContext(breadcrumbs),
-    ],
+    '@graph': [stripContext(localBusiness), stripContext(breadcrumbs)],
   }
 }

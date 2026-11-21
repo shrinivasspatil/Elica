@@ -5,9 +5,15 @@ import { SchemaMarkup } from '@/components/schema-markup'
 import {
   DEFAULT_AREA_SERVICE_LINKS,
   getAllAreas,
-  getAreaById,
+  getAreaBySlugOrId,
+  getAreaCorridor,
   getAreaFaqs,
+  getAreaHousing,
+  getAreaIntro,
+  getAreaLandmark,
   getAreaLocalNotes,
+  getAreaPath,
+  getAreaSlug,
   getBranchName,
   getNearbyAreaLinks,
 } from '@/lib/areas'
@@ -15,46 +21,44 @@ import {
   absoluteUrl,
   buildPageMetadata,
   generateBreadcrumbSchema,
-  generateLocalBusinessSchema,
   generateServiceSchema,
 } from '@/lib/seo'
 import Link from 'next/link'
-import { notFound } from 'next/navigation'
+import { notFound, permanentRedirect } from 'next/navigation'
 import type { Metadata } from 'next'
 
 interface AreaDetailPageProps {
-  params: Promise<{ id: string }>
+  params: Promise<{ slug: string }>
 }
 
 export function generateStaticParams() {
-  return getAllAreas().map((area) => ({ id: area.id }))
+  return getAllAreas().map((area) => ({ slug: getAreaSlug(area.areaName) }))
 }
 
 export async function generateMetadata(
   props: AreaDetailPageProps
 ): Promise<Metadata> {
   const params = await props.params
-  const area = getAreaById(params.id)
+  const area = getAreaBySlugOrId(params.slug)
 
   if (!area) {
     return buildPageMetadata({
-      title: 'Branch Not Found',
-      description: 'The requested Elica Service Centre page was not found.',
-      path: `/areas/${params.id}`,
+      title: 'Area Not Found',
+      description: 'The requested Elica repair coverage page was not found.',
+      path: `/areas/${params.slug}`,
       noIndex: true,
     })
   }
 
-  const branch = getBranchName(area.areaName)
-  const landmark = area.landmark || area.areaName
+  const landmark = getAreaLandmark(area)
+  const path = getAreaPath(area)
 
   return buildPageMetadata({
-    title: `${branch} | Bangalore`,
-    description: `${branch} — Elica chimney, hob and microwave repair near ${landmark}, ${area.areaName}. ${area.description}`,
-    path: `/areas/${area.id}`,
+    title: `Elica Repair in ${area.areaName} | Bangalore`,
+    description: `Chimney, hob and microwave repair in ${area.areaName} near ${landmark}. Typical response ${area.responseTime}.`,
+    path,
+    absoluteTitle: true,
     keywords: [
-      branch,
-      `Elica service centre ${area.areaName}`,
       `Elica repair ${area.areaName}`,
       `chimney service ${area.areaName}`,
       `appliance repair ${area.areaName} Bangalore`,
@@ -64,35 +68,31 @@ export async function generateMetadata(
 
 export default async function AreaDetailPage(props: AreaDetailPageProps) {
   const params = await props.params
-  const area = getAreaById(params.id)
+  const area = getAreaBySlugOrId(params.slug)
 
   if (!area) {
     notFound()
   }
 
+  const slug = getAreaSlug(area.areaName)
+  // Legacy numeric URLs (/areas/100) → SEO slug (/areas/immadihalli)
+  if (params.slug !== slug) {
+    permanentRedirect(getAreaPath(area))
+  }
+
   const branch = getBranchName(area.areaName)
+  const path = getAreaPath(area)
   const faqs = getAreaFaqs(area)
   const localNotes = getAreaLocalNotes(area)
-  const nearbyAreas = getNearbyAreaLinks(area, 6)
+  const nearbyAreas = getNearbyAreaLinks(area, 10)
+  const intro = getAreaIntro(area)
   const issues =
     area.commonIssues && area.commonIssues.length > 0
       ? area.commonIssues
       : ['chimney deep cleaning', 'weak suction', 'gas hob flame service']
-  const landmark = area.landmark || `${area.areaName} Main Road`
-  const housing = area.housingProfile || 'apartments and independent homes'
-  const corridor = area.corridor || 'Bangalore'
-
-  const localBusiness = {
-    ...generateLocalBusinessSchema(),
-    name: branch,
-    url: absoluteUrl(`/areas/${area.id}`),
-    areaServed: area.zoneList.map((zone) => ({ '@type': 'Place', name: zone })),
-    geo: {
-      '@type': 'GeoCoordinates',
-      latitude: area.coordinates.lat,
-      longitude: area.coordinates.lng,
-    },
-  }
+  const landmark = getAreaLandmark(area)
+  const housing = getAreaHousing(area)
+  const corridor = getAreaCorridor(area)
 
   return (
     <main className="min-h-screen bg-background">
@@ -100,15 +100,14 @@ export default async function AreaDetailPage(props: AreaDetailPageProps) {
         schema={[
           generateBreadcrumbSchema([
             { name: 'Home', url: '/' },
-            { name: 'Service Centres', url: '/areas' },
-            { name: branch, url: `/areas/${area.id}` },
+            { name: 'Service Areas', url: '/areas' },
+            { name: branch, url: path },
           ]),
-          localBusiness,
           generateServiceSchema({
-            name: `${branch} — Elica Appliance Repair`,
-            description: area.description,
+            name: `Elica appliance repair in ${area.areaName}`,
+            description: `Chimney, hob and microwave repair in ${area.areaName} near ${landmark}.`,
             areaName: area.areaName,
-            url: absoluteUrl(`/areas/${area.id}`),
+            url: absoluteUrl(path),
           }),
         ]}
       />
@@ -126,6 +125,7 @@ export default async function AreaDetailPage(props: AreaDetailPageProps) {
             <p className="aeo-answer text-lg text-muted-foreground max-w-3xl">
               {area.description}
             </p>
+            <p className="text-muted-foreground max-w-3xl">{intro}</p>
             <p className="text-muted-foreground max-w-3xl">
               We serve {housing} in {area.areaName} with a typical response time of{' '}
               <strong>{area.responseTime}</strong>.
@@ -138,7 +138,7 @@ export default async function AreaDetailPage(props: AreaDetailPageProps) {
       <section className="py-10 border-b border-border">
         <div className="container mx-auto px-4 max-w-3xl space-y-3">
           <h2 className="text-2xl font-serif font-bold">
-            Why homeowners in {area.areaName} choose {branch}
+            Why homeowners in {area.areaName} book Elica Repair & Service
           </h2>
           <ul className="list-disc pl-5 space-y-2 text-muted-foreground">
             {localNotes.map((note) => (
@@ -187,15 +187,13 @@ export default async function AreaDetailPage(props: AreaDetailPageProps) {
             Common Elica issues we fix in {area.areaName}
           </h2>
           <p className="text-muted-foreground">
-            Based on service requests from {housing} around {landmark}, these are frequent jobs at{' '}
-            {branch}:
+            Based on service requests from {housing} around {landmark}, these are frequent jobs in{' '}
+            {area.areaName}:
           </p>
           <ul className="list-disc pl-5 space-y-2 text-foreground">
             {issues.map((issue) => (
               <li key={issue}>{issue}</li>
             ))}
-            <li>Elica chimney general cleaning and deep cleaning</li>
-            <li>Built-in microwave and cooking range servicing</li>
           </ul>
           {area.localTip && (
             <p className="rounded-lg border border-border bg-background p-4 text-sm text-muted-foreground">
@@ -207,7 +205,7 @@ export default async function AreaDetailPage(props: AreaDetailPageProps) {
 
       <section className="py-12 md:py-16 bg-secondary/30">
         <div className="container mx-auto px-4 max-w-3xl space-y-4">
-          <h2 className="text-2xl font-serif font-bold">FAQs for {branch}</h2>
+          <h2 className="text-2xl font-serif font-bold">FAQs for Elica repair in {area.areaName}</h2>
           {faqs.map((faq) => (
             <div key={faq.question} className="rounded-lg border border-border bg-background p-4">
               <h3 className="font-semibold">{faq.question}</h3>
@@ -219,7 +217,7 @@ export default async function AreaDetailPage(props: AreaDetailPageProps) {
 
       <section className="py-12 border-t border-border">
         <div className="container mx-auto px-4 max-w-3xl space-y-4">
-          <h2 className="text-2xl font-serif font-bold">Nearby Elica Service Centres</h2>
+          <h2 className="text-2xl font-serif font-bold">Nearby service areas</h2>
           <p className="text-muted-foreground">
             Also covering localities close to {area.areaName}:
           </p>
@@ -227,7 +225,7 @@ export default async function AreaDetailPage(props: AreaDetailPageProps) {
             {nearbyAreas.map((nearby) => (
               <li key={nearby.id}>
                 <Link
-                  href={`/areas/${nearby.id}`}
+                  href={getAreaPath(nearby)}
                   className="text-primary hover:underline font-medium"
                 >
                   {getBranchName(nearby.areaName)}

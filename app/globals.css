@@ -50,7 +50,7 @@
 
 :root {
   color-scheme: light;
-  /* Premium Navy + Gold color scheme for Elicaa */
+  /* Premium Navy + Gold color scheme for Elica */
   --background: oklch(0.995 0.001 250);
   --foreground: oklch(0.12 0.03 250);
   --card: oklch(1 0 0);

@@ -3,21 +3,25 @@
 import Link from 'next/link'
 import { Card } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
+import { getBranchName, getAreaSlug } from '@/lib/areas'
 
 interface AreaCardProps {
-  id: string
+  id?: string
   areaName: string
   zones?: string
   description?: string
 }
 
-export function AreaCard({ id, areaName, zones, description }: AreaCardProps) {
+export function AreaCard({ areaName, zones, description }: AreaCardProps) {
+  const branchName = getBranchName(areaName)
+  const href = `/areas/${getAreaSlug(areaName)}`
+
   return (
-    <Link href={`/areas/${id}`}>
+    <Link href={href}>
       <Card className="p-6 hover:shadow-lg transition-all cursor-pointer border-border/50 hover:border-accent/50 group">
         <div className="space-y-3">
           <h3 className="text-lg font-semibold text-foreground group-hover:text-primary transition-colors">
-            {areaName}
+            {branchName}
           </h3>
 
           {zones && (
@@ -37,7 +41,7 @@ export function AreaCard({ id, areaName, zones, description }: AreaCardProps) {
             size="sm"
             className="mt-4 text-accent hover:text-accent hover:bg-accent/10"
           >
-            Book in {areaName} →
+            View branch →
           </Button>
         </div>
       </Card>

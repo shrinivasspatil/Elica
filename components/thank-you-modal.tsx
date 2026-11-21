@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import { X, CheckCircle, Phone, Mail } from 'lucide-react'
 import { Button } from '@/components/ui/button'
+import { getLeadServiceLabel } from '@/lib/lead-services'
 
 interface ThankYouModalProps {
   isOpen: boolean
@@ -13,17 +14,6 @@ interface ThankYouModalProps {
     pincode: string
     service: string
   }
-}
-
-const serviceLabels: Record<string, string> = {
-  'chimney-cleaning': 'Chimney Cleaning & Maintenance',
-  'range-hood': 'Range Hood Installation',
-  'hob-repair': 'Hob Repair & Service',
-  'microwave': 'Microwave Service',
-  'dishwasher': 'Dishwasher Repair',
-  'oven': 'Oven Service',
-  'cooktop': 'Cooktop Repair',
-  'exhaust-fan': 'Exhaust Fan Service',
 }
 
 export function ThankYouModal({ isOpen, onClose, leadData }: ThankYouModalProps) {
@@ -44,13 +34,16 @@ export function ThankYouModal({ isOpen, onClose, leadData }: ThankYouModalProps)
     <>
       {/* Backdrop */}
       <div
-        className="fixed inset-0 bg-black/50 z-40 transition-opacity"
+        className="fixed inset-0 bg-black/50 z-[110] transition-opacity"
         onClick={handleClose}
       />
 
       {/* Modal */}
-      <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-        <div className="bg-white rounded-lg shadow-xl max-w-md w-full animate-in fade-in zoom-in">
+      <div className="fixed inset-0 z-[111] flex items-center justify-center p-4">
+        <div
+          className="bg-white rounded-lg shadow-xl max-w-md w-full relative animate-in fade-in zoom-in"
+          onClick={(e) => e.stopPropagation()}
+        >
           {/* Close Button */}
           <button
             onClick={handleClose}
@@ -72,7 +65,7 @@ export function ThankYouModal({ isOpen, onClose, leadData }: ThankYouModalProps)
             {/* Heading */}
             <h2 className="text-2xl font-bold text-foreground mb-2">Thank You!</h2>
             <p className="text-muted-foreground mb-6">
-              Your free quote request has been received successfully
+              Your free quote request has been received successfully.
             </p>
 
             {/* Details Section */}
@@ -96,7 +89,7 @@ export function ThankYouModal({ isOpen, onClose, leadData }: ThankYouModalProps)
                 <div>
                   <p className="text-sm text-muted-foreground mb-1">Service Requested</p>
                   <p className="font-semibold text-foreground">
-                    {serviceLabels[leadData.service] || leadData.service}
+                    {getLeadServiceLabel(leadData.service)}
                   </p>
                 </div>
               </div>
@@ -122,23 +115,12 @@ export function ThankYouModal({ isOpen, onClose, leadData }: ThankYouModalProps)
             </div>
 
             {/* Action Buttons */}
-            <div className="flex gap-3">
-              <Button
-                onClick={handleClose}
-                variant="outline"
-                className="flex-1"
-              >
-                Back to Home
-              </Button>
-              <Button
-                onClick={() => {
-                  window.location.href = '/booking'
-                }}
-                className="flex-1 bg-primary hover:bg-primary/90"
-              >
-                Book Now
-              </Button>
-            </div>
+            <Button
+              onClick={handleClose}
+              className="w-full bg-primary hover:bg-primary/90"
+            >
+              Close
+            </Button>
 
             {/* Footer */}
             <p className="text-xs text-muted-foreground mt-4">

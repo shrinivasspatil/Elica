@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
+  <rect width="64" height="64" rx="12" fill="#2E3B52"/>
+  <rect x="0" y="60" width="64" height="4" fill="#B8A85F"/>
+  <text x="32" y="35.84" text-anchor="middle"
+    font-family="Georgia, 'Times New Roman', Times, serif"
+    font-size="17" font-weight="700" fill="#FFFFFF">Elica</text>
+</svg>

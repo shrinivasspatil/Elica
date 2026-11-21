@@ -1,0 +1,16 @@
+# AI crawler policy for https://elicservicecenter.com
+
+User-Agent: *
+Allow: /
+Allow: /llms.txt
+
+# Preferred machine-readable summary:
+# https://elicservicecenter.com/llms.txt
+
+Disallow: /api/
+Disallow: /admin/
+Disallow: /booking-confirmation
+
+# Contact
+# Email: support@elicservicecenter.com
+# Phone: +91 99025 52888

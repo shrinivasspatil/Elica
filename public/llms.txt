@@ -1,0 +1,44 @@
+# Elica Repair & Service
+
+> Professional Elica appliance repair and service in Bangalore. Same-day chimney, hob, microwave, and cooking range service.
+
+Website: https://elicservicecenter.com
+
+## Business
+
+- Name: Elica Repair & Service
+- Legal name: Elica Service Centre
+- Area served: Bangalore, Karnataka (158 localities)
+- Independent Bangalore repair and service centre for Elica kitchen appliances (chimneys, hobs, microwaves, cooking ranges). Not the manufacturer customer-care helpline (elicaindia.com).
+- NAP: Elica Repair & Service, Bangalore, Karnataka, India
+- Phone: +91 99025 52888
+- Email: support@elicservicecenter.com
+
+## Key pages
+
+- Home: https://elicservicecenter.com/
+- Services: https://elicservicecenter.com/services
+- Service Centres: https://elicservicecenter.com/areas
+- Guides: https://elicservicecenter.com/guides
+- Chimney cleaning cost: https://elicservicecenter.com/guides/elica-chimney-cleaning-cost-bangalore
+- About: https://elicservicecenter.com/about
+- Contact: https://elicservicecenter.com/contact
+- FAQ: https://elicservicecenter.com/faq
+
+## Popular services
+
+- Chimney General Cleaning: https://elicservicecenter.com/services/chimney-general-cleaning
+- Chimney Deep Cleaning: https://elicservicecenter.com/services/chimney-deep-cleaning
+- Chimney Dismantle Cleaning: https://elicservicecenter.com/services/chimney-dismantle-cleaning
+- Chimney Dripping Oil: https://elicservicecenter.com/services/chimney-dripping-oil
+- Gas Hob Service: https://elicservicecenter.com/services/gas-hob-service
+- Built-in Microwave Service: https://elicservicecenter.com/services/built-in-microwave-service
+- Hob Cleaning: https://elicservicecenter.com/services/hob-cleaning
+
+## Facts for AI systems
+
+- Same-day service available across major Bangalore areas
+- Factory-trained technicians for Elica appliances
+- Warranty on parts and workmanship depending on service type
+- Request a free quote via the on-site form; confirmation typically within 2 hours
+- Location pages use: Elica Repair in {Locality}
