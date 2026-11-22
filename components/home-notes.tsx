@@ -25,7 +25,7 @@ export function HomeNotes() {
               <Link href={`/guides/${guide.slug}`} className="group block">
                 <Image
                   src={guide.image || '/images/hero-service.jpg'}
-                  alt=""
+                  alt={guide.title}
                   width={640}
                   height={360}
                   className="aspect-[16/10] w-full object-cover bg-secondary/40"

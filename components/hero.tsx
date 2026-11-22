@@ -19,7 +19,7 @@ export function Hero() {
           <div className="space-y-6">
             <div className="space-y-4">
               <h1 className="text-5xl md:text-6xl lg:text-7xl font-serif font-bold leading-tight text-balance tracking-tight">
-                Professional Elica Repair & Service
+                Elica chimney service in Bangalore
               </h1>
               <p className="text-lg md:text-xl text-white/85 leading-relaxed text-pretty font-light">
                 Expert technicians serving Bangalore with fast, reliable appliance repair and maintenance. Available across all major areas with same-day service options.
