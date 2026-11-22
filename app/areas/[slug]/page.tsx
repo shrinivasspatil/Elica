@@ -54,7 +54,7 @@ export async function generateMetadata(
   const path = getAreaPath(area)
 
   return buildPageMetadata({
-    title: `Elica Repair in ${area.areaName} | Bangalore`,
+    title: `Elica chimney service in ${area.areaName}`,
     description: `Chimney, hob and microwave repair in ${area.areaName} near ${landmark}. Typical response ${area.responseTime}.`,
     path,
     absoluteTitle: true,

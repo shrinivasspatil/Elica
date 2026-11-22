@@ -18,8 +18,8 @@ const serviceAreas = getAllAreas()
 const corridorGroups = getAreasGroupedByCorridor()
 
 export const metadata: Metadata = buildPageMetadata({
-  title: `Elica Repair Areas in Bangalore`,
-  description: `Elica Repair & Service covers ${serviceAreas.length} Bangalore localities including Whitefield, Koramangala, HSR Layout, Bommanahalli, Indiranagar and Electronic City.`,
+  title: `Elica chimney service areas in Bangalore`,
+  description: `If you searched Elica service near me, pick a locality. Coverage across ${serviceAreas.length} Bangalore areas including Whitefield, Koramangala, HSR Layout, Bommanahalli, Indiranagar and Electronic City.`,
   path: '/areas',
   absoluteTitle: true,
 })
@@ -49,11 +49,10 @@ export default function AreasPage() {
         <div className="container mx-auto px-4">
           <div className="space-y-4">
             <h1 className="text-4xl md:text-5xl font-serif font-bold text-foreground text-balance">
-              Elica repair coverage in {serviceAreas.length} Bangalore areas
+              Elica chimney service areas in Bangalore
             </h1>
             <p className="aeo-answer text-lg text-muted-foreground max-w-3xl">
-              Book Elica Repair & Service across {serviceAreas.length} Bangalore localities with typical 2–4 hour
-              response — including Whitefield, Koramangala, HSR, Bommanahalli, Yelahanka, and RR Nagar.
+              If you searched Elica service near me, pick the locality page. Coverage across {serviceAreas.length} Bangalore areas with typical 2–4 hour response — Whitefield, Koramangala, HSR, Bommanahalli, Yelahanka and RR Nagar.
             </p>
             <nav aria-label="Bangalore corridors" className="flex flex-wrap gap-2 pt-2">
               {corridorGroups.map((group) => (

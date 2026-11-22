@@ -622,7 +622,7 @@ export const DEFAULT_AREA_SERVICES = DEFAULT_AREA_SERVICE_LINKS.map((s) => s.lab
 
 /** Location-page heading. Business name stays siteConfig.name. */
 export function getBranchName(areaName: string): string {
-  return `Elica Repair in ${areaName}`
+  return `Elica chimney service in ${areaName}`
 }
 
 export function getAreaLandmark(area: ServiceArea): string {
@@ -721,8 +721,12 @@ export function getAreaFaqs(area: ServiceArea) {
 
   return [
     {
+      question: `I searched Elica service near me. Do you cover ${area.areaName}?`,
+      answer: `Yes. If you searched Elica chimney service near me from ${area.areaName}, this page is the published doorstep coverage around ${landmark}. There is no invented ${area.areaName} manufacturer shopfront on this site.`,
+    },
+    {
       question: `Do you provide Elica repair in ${area.areaName}?`,
-      answer: `Yes. Elica Repair & Service covers certified chimney, hob, microwave, and cooking-range repair across ${area.areaName} and nearby zones including ${nearby}. Work focuses on ${housing} around ${landmark}.`,
+      answer: `Yes. Elica Repair & Service covers chimney, hob, microwave, and cooking-range repair across ${area.areaName} and nearby zones including ${nearby}. Work focuses on ${housing} around ${landmark}.`,
     },
     {
       question: `What is the response time in ${area.areaName}?`,
